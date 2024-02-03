@@ -6,11 +6,15 @@
 				<InputText
 					id="playerNameInput"
 					size="large"
-					v-model="mainStore.playerName"
+					@blur="checkErrors()"
+					v-model="playerName"
+					:class="{ 'p-invalid': isError }"
 				/>
 				<label for="playerNameInput">Your name</label>
 			</span>
-			<Button class="button p-button-lg">Submit</Button>
+			<Button class="p-button-lg" @click="submit()" :disabled="!valid">
+				Submit
+			</Button>
 		</div>
 	</div>
 </template>
@@ -19,7 +23,27 @@
 import InputText from 'primevue/inputtext'
 import { useMainStore } from '../stores/mainStore'
 import Button from 'primevue/button'
+import { type Ref, ref } from 'vue'
+import { useRouter } from 'vue-router'
 const mainStore = useMainStore()
+const playerName: Ref<string | null> = ref(null)
+const valid: Ref<boolean> = ref(false)
+const isError: Ref<boolean> = ref(false)
+const router = useRouter()
+const checkErrors = () => {
+	if (playerName.value === '' || playerName.value === null) {
+		isError.value = true
+		valid.value = false
+	} else {
+		isError.value = false
+		valid.value = true
+	}
+}
+
+const submit = () => {
+	mainStore.playerName = playerName.value
+	router.push('/home')
+}
 </script>
 
 <style scoped>

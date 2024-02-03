@@ -8,9 +8,11 @@ import PrimeVue from 'primevue/config'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/lara-light-blue/theme.css'
+import Tooltip from 'primevue/tooltip'
 const pinia = createPinia()
 const app = createApp(App)
 app.directive('ripple', Ripple)
+app.directive('tooltip', Tooltip)
 app.use(router)
 app.use(PrimeVue, { ripple: true })
 app.use(pinia)
