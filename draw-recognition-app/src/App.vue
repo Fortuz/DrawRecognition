@@ -1,8 +1,13 @@
 <template>
-	<nav>
-		<h1 style="font-size: 10em">HELLO WORLD</h1>
-	</nav>
-	<RouterView></RouterView>
+	<NavigationBar></NavigationBar>
+	<ProfileCreator></ProfileCreator>
+	<!-- <RouterView></RouterView> -->
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useMainStore } from './stores/mainStore'
+import NavigationBar from './components/NavigationBar.vue'
+import ProfileCreator from './views/ProfileCreator.vue'
+const mainStore = useMainStore()
+mainStore.$state
+</script>
