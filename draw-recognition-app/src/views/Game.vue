@@ -4,12 +4,16 @@
 			<canvas
 				ref="canvas"
 				width="256"
-				class="center"
 				height="256"
+				class="center"
 				@mousedown="startDrawing"
 				@mouseup="stopDrawing"
 				@mouseleave="stopDrawing"
 				@mousemove="draw"
+				@touchstart="startDrawing"
+				@touchend="stopDrawing"
+				@touchcancel="stopDrawing"
+				@touchmove.prevent="draw"
 				style="border: 1px solid #000"
 			></canvas>
 		</template>
@@ -35,7 +39,16 @@ onMounted(() => {
 	}
 })
 
-const startDrawing = (event: MouseEvent) => {
+const getTouchPosition = (event: TouchEvent) => {
+	const rect = canvas.value?.getBoundingClientRect()
+	const touch = event.touches[0]
+	return {
+		x: touch.clientX - (rect?.left ?? 0),
+		y: touch.clientY - (rect?.top ?? 0),
+	}
+}
+
+const startDrawing = (event: MouseEvent | TouchEvent) => {
 	drawing.value = true
 	draw(event)
 }
@@ -47,8 +60,20 @@ const stopDrawing = () => {
 	}
 }
 
-const draw = (event: MouseEvent) => {
+const draw = (event: MouseEvent | TouchEvent) => {
 	if (!drawing.value || !ctx) return
+
+	let clientX = 0
+	let clientY = 0
+
+	if (event instanceof MouseEvent) {
+		clientX = event.offsetX
+		clientY = event.offsetY
+	} else if (event instanceof TouchEvent && event.touches.length > 0) {
+		const touchPos = getTouchPosition(event)
+		clientX = touchPos.x
+		clientY = touchPos.y
+	}
 
 	if (!mode.value) {
 		ctx.lineWidth = 30
@@ -59,10 +84,10 @@ const draw = (event: MouseEvent) => {
 	}
 
 	ctx.lineCap = 'round'
-	ctx.lineTo(event.offsetX, event.offsetY)
+	ctx.lineTo(clientX, clientY)
 	ctx.stroke()
 	ctx.beginPath()
-	ctx.moveTo(event.offsetX, event.offsetY)
+	ctx.moveTo(clientX, clientY)
 }
 
 const onModeChanged = (value: boolean) => {
@@ -75,6 +100,7 @@ const onModeChanged = (value: boolean) => {
 	width: 20vw;
 	margin: auto;
 	margin-top: 20vh;
+	min-width: 300px;
 }
 
 .center {
