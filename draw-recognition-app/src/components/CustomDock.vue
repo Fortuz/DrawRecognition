@@ -20,9 +20,11 @@ import { type Ref, ref } from 'vue'
 const mode: Ref<boolean> = ref(true)
 const pencil: string = 'pencil.webp'
 const eraser: string = 'eraser.webp'
+const clear: string = 'delete.webp'
 
 const emit = defineEmits<{
 	(e: 'change', value: boolean): void
+	(e: 'clear'): void
 }>()
 
 const items = ref([
@@ -31,6 +33,7 @@ const items = ref([
 		icon: pencil,
 		command: () => {
 			mode.value = true
+			emit('change', mode.value)
 		},
 	},
 	{
@@ -38,6 +41,14 @@ const items = ref([
 		icon: eraser,
 		command: () => {
 			mode.value = false
+			emit('change', mode.value)
+		},
+	},
+	{
+		label: 'Clear',
+		icon: clear,
+		command: () => {
+			emit('clear')
 		},
 	},
 ])
@@ -47,6 +58,5 @@ const onItemClick = (event: any, item: any) => {
 		item.command()
 	}
 	event.preventDefault()
-	emit('change', mode.value)
 }
 </script>

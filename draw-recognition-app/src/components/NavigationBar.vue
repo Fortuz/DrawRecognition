@@ -12,14 +12,14 @@ import { Ref, ref } from 'vue'
 import type { MenuItem } from 'primevue/menuitem'
 const items: Ref<MenuItem[]> = ref([
 	{
-		label: 'Resources',
+		label: 'Normal play',
 		root: true,
-		route: '/',
+		route: '/normalplay',
 	},
 	{
-		label: 'Contact',
+		label: 'Free play',
 		root: true,
-		route: '/asd',
+		route: '/freeplay',
 	},
 ])
 </script>

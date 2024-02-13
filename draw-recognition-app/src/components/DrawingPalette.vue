@@ -1,43 +1,68 @@
 <template>
-	<Card class="card">
-		<template #content>
-			<canvas
-				ref="canvas"
-				width="256"
-				height="256"
-				class="center"
-				@mousedown="startDrawing"
-				@mouseup="stopDrawing"
-				@mouseleave="stopDrawing"
-				@mousemove="draw"
-				@touchstart="startDrawing"
-				@touchend="stopDrawing"
-				@touchcancel="stopDrawing"
-				@touchmove.prevent="draw"
-				style="border: 1px solid #000"
-			></canvas>
-		</template>
-	</Card>
+	<canvas
+		ref="canvas"
+		width="256"
+		height="256"
+		@mousedown="startDrawing"
+		@mouseup="stopDrawing"
+		@mouseleave="stopDrawing"
+		@mousemove="draw"
+		@touchstart="startDrawing"
+		@touchend="stopDrawing"
+		@touchcancel="stopDrawing"
+		@touchmove.prevent="draw"
+		style="border: 1px solid black"
+	></canvas>
 	<Teleport to="body">
-		<CustomDock @change="onModeChanged"></CustomDock>
+		<CustomDock @change="onModeChanged" @clear="onCleared"></CustomDock>
 	</Teleport>
 </template>
 
 <script setup lang="ts">
-import Card from 'primevue/card'
 import { type Ref, ref, onMounted } from 'vue'
 import CustomDock from '../components/CustomDock.vue'
+import * as tf from '@tensorflow/tfjs'
 
 const canvas: Ref<HTMLCanvasElement | null> = ref(null)
 let ctx: CanvasRenderingContext2D | null = null
 let drawing: Ref<boolean> = ref(false)
 let mode: Ref<boolean> = ref(true)
+const modelPath: string = '/model.json'
+
+const predict = async () => {
+	if (!ctx || !canvas.value) return
+	const model = await tf.loadLayersModel(modelPath)
+	let tensor = tf.browser.fromPixels(canvas.value, 1)
+	tensor = tensor.transpose()
+	tensor = tf.reverse(tensor, 1)
+	tensor = tf.scalar(1).sub(tensor.toFloat().div(255)).expandDims(-1)
+	tensor = tensor.round()
+	const output = model.predict(tensor) as tf.Tensor
+	const predictedIndex = output.argMax(1).dataSync()[0]
+	return predictedIndex
+}
+
+defineExpose({
+	predict,
+})
+
+const onCleared = () => {
+	clear()
+}
 
 onMounted(() => {
 	if (canvas.value) {
 		ctx = canvas.value.getContext('2d')
+		clear()
 	}
 })
+
+const clear = () => {
+	if (ctx) {
+		ctx.fillStyle = 'white'
+		ctx.fillRect(0, 0, 256, 256)
+	}
+}
 
 const getTouchPosition = (event: TouchEvent) => {
 	const rect = canvas.value?.getBoundingClientRect()
@@ -54,10 +79,9 @@ const startDrawing = (event: MouseEvent | TouchEvent) => {
 }
 
 const stopDrawing = () => {
+	if (!ctx) return
 	drawing.value = false
-	if (ctx) {
-		ctx.beginPath()
-	}
+	ctx.beginPath()
 }
 
 const draw = (event: MouseEvent | TouchEvent) => {
@@ -94,17 +118,3 @@ const onModeChanged = (value: boolean) => {
 	mode.value = value
 }
 </script>
-
-<style scoped>
-.card {
-	width: 20vw;
-	margin: auto;
-	margin-top: 20vh;
-	min-width: 300px;
-}
-
-.center {
-	margin: auto;
-	display: flex;
-}
-</style>
