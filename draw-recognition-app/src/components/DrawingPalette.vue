@@ -42,10 +42,6 @@ const predict = async () => {
 	return predictedIndex
 }
 
-defineExpose({
-	predict,
-})
-
 const onCleared = () => {
 	clear()
 }
@@ -117,4 +113,9 @@ const draw = (event: MouseEvent | TouchEvent) => {
 const onModeChanged = (value: boolean) => {
 	mode.value = value
 }
+
+defineExpose({
+	predict,
+	clear,
+})
 </script>
