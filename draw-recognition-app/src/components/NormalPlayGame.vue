@@ -1,5 +1,5 @@
 <template>
-	<Dialog v-model:visible="end" modal>
+	<Dialog v-model:visible="end" modal :closable="false" :draggable="false">
 		Your final score is : {{ score }} / {{ selectedNumber }}
 		<div>
 			<label>Do you want to play another game?</label>
@@ -15,7 +15,12 @@
 		>
 	</div>
 	<div v-if="prediction">
-		My guess was: <span style="font-weight: bold">{{ prediction }}</span>
+		My guess was:
+		<span
+			style="font-weight: bold"
+			:class="{ good: isCorrect, wrong: !isCorrect }"
+			>{{ prediction }}</span
+		>
 	</div>
 	<DrawingPalette ref="drawingPalette"></DrawingPalette>
 	<Button @click="makePrediction()">Predict</Button>
@@ -39,6 +44,7 @@ const prediction: Ref<string | null> = ref(null)
 const end: Ref<boolean> = ref(false)
 let selectedCategories: Category[]
 const router = useRouter()
+const isCorrect: Ref<boolean | null> = ref(null)
 
 const emit = defineEmits<{
 	(e: 'restart'): void
@@ -87,7 +93,8 @@ initialize()
 
 const makePrediction = async () => {
 	const predId = await predict()
-	if (predId === selectedCategories[currentIndex.value].word_id) {
+	isCorrect.value = predId === selectedCategories[currentIndex.value].word_id
+	if (isCorrect.value === true) {
 		score.value++
 	}
 	prediction.value = getNameById(predId)
@@ -103,3 +110,13 @@ const quit = () => {
 	router.push('/home')
 }
 </script>
+
+<style scoped>
+.good {
+	color: green;
+}
+
+.wrong {
+	color: red;
+}
+</style>

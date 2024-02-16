@@ -1,5 +1,5 @@
 <template>
-	<Dialog v-model:visible="inMenu" modal>
+	<Dialog v-model:visible="inMenu" modal :closable="false" :draggable="false">
 		<h2>Settings</h2>
 		<InputNumber
 			v-model="categoryNumber"
