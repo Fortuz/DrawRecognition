@@ -7,6 +7,8 @@ import Home from '../views/Home.vue'
 import Main from '../views/Main.vue'
 
 const routes = [
+	{ path: '/profilecreator', component: ProfileCreator },
+	{ path: '/', component: Home },
 	{
 		path: '/',
 		component: Main,
@@ -14,12 +16,8 @@ const routes = [
 			{ path: '/normalplay', component: NormalPlay },
 			{ path: '/freeplay', component: FreePlay },
 			{ path: '/helper', component: Helper },
-
-			{ path: '/home', component: Home },
-			{ path: '/', component: Home },
 		],
 	},
-	{ path: '/profilecreator', component: ProfileCreator },
 ]
 
 export const router = createRouter({
