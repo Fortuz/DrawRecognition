@@ -1,4 +1,5 @@
 export type Category = {
-	word: string
+	word_eng: string
 	word_id: number
+	word_hun: string
 }

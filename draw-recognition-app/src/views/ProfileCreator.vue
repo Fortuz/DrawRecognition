@@ -1,6 +1,6 @@
 <template>
 	<div class="profileCreator">
-		<h2 class="big">Type your name</h2>
+		<h2 class="big">{{ mainStore.languageDict['typeYourName'] }}</h2>
 		<div>
 			<span class="p-float-label big">
 				<InputText
@@ -10,10 +10,12 @@
 					v-model="playerName"
 					:class="{ 'p-invalid': isError }"
 				/>
-				<label for="playerNameInput">Your name</label>
+				<label for="playerNameInput">{{
+					mainStore.languageDict['yourName']
+				}}</label>
 			</span>
 			<Button class="p-button-lg" @click="submit()" :disabled="!valid">
-				Submit
+				{{ mainStore.languageDict['submit'] }}
 			</Button>
 		</div>
 	</div>
@@ -24,9 +26,11 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import { type Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useMainStore } from '../stores/mainStore'
 const playerName: Ref<string | null> = ref(null)
 const valid: Ref<boolean> = ref(false)
 const isError: Ref<boolean> = ref(false)
+const mainStore = useMainStore()
 const router = useRouter()
 const checkErrors = () => {
 	if (playerName.value?.trim() === '' || playerName.value === null) {

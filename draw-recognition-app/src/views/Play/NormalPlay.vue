@@ -1,6 +1,6 @@
 <template>
 	<Dialog v-model:visible="inMenu" modal :closable="false" :draggable="false">
-		<h2>Settings</h2>
+		<h2>{{ mainStore.languageDict['settings'] }}</h2>
 		<InputNumber
 			v-model="categoryNumber"
 			input-id="categoryNumberInput"
@@ -10,7 +10,7 @@
 			:min="1"
 			:max="categories.length"
 		></InputNumber>
-		<Button @click="start">Start</Button>
+		<Button @click="start">{{ mainStore.languageDict['start'] }}</Button>
 	</Dialog>
 	<NormalPlayGame
 		@restart="onRestart()"
@@ -26,7 +26,8 @@ import { categories } from '../../assets/categories'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputNumber from 'primevue/inputnumber'
-
+import { useMainStore } from '../../stores/mainStore'
+const mainStore = useMainStore()
 const inMenu: Ref<boolean> = ref(true)
 const categoryNumber: Ref<number> = ref(5)
 

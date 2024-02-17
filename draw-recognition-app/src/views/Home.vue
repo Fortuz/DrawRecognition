@@ -2,14 +2,26 @@
 	<div class="menu">
 		<ul>
 			<li>
-				<RouterLink to="/normalplay">Normal Play</RouterLink>
+				<RouterLink to="/normalplay">{{
+					mainStore.languageDict['normalPlay']
+				}}</RouterLink>
 			</li>
 			<li>
-				<RouterLink to="/freeplay">Free Play</RouterLink>
+				<RouterLink to="/freeplay">{{
+					mainStore.languageDict['freePlay']
+				}}</RouterLink>
 			</li>
 			<li>
-				<RouterLink to="helper">Helper</RouterLink>
+				<RouterLink to="helper">{{
+					mainStore.languageDict['helper']
+				}}</RouterLink>
 			</li>
 		</ul>
 	</div>
 </template>
+
+<script setup lang="ts">
+import { useMainStore } from '../stores/mainStore'
+
+const mainStore = useMainStore()
+</script>
