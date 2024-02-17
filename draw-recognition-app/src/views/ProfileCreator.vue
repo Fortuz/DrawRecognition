@@ -6,7 +6,7 @@
 				<InputText
 					id="playerNameInput"
 					size="large"
-					@blur="checkErrors()"
+					@change="checkErrors()"
 					v-model="playerName"
 					:class="{ 'p-invalid': isError }"
 				/>
@@ -21,17 +21,15 @@
 
 <script setup lang="ts">
 import InputText from 'primevue/inputtext'
-import { useMainStore } from '../stores/mainStore'
 import Button from 'primevue/button'
 import { type Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
-const mainStore = useMainStore()
 const playerName: Ref<string | null> = ref(null)
 const valid: Ref<boolean> = ref(false)
 const isError: Ref<boolean> = ref(false)
 const router = useRouter()
 const checkErrors = () => {
-	if (playerName.value === '' || playerName.value === null) {
+	if (playerName.value?.trim() === '' || playerName.value === null) {
 		isError.value = true
 		valid.value = false
 	} else {
@@ -41,8 +39,10 @@ const checkErrors = () => {
 }
 
 const submit = () => {
-	mainStore.playerName = playerName.value
-	router.push('/home')
+	if (valid.value && playerName.value) {
+		localStorage.setItem('userNameToken', playerName.value)
+		router.push('/home')
+	}
 }
 </script>
 
