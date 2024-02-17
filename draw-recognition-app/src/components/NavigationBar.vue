@@ -1,14 +1,15 @@
 <template>
 	<Menubar :model="items">
 		<template #item="{ item }">
-			<span class="item">{{ item.label }}</span>
+			<span class="item" v-if="!item.icon">{{ item.label }}</span>
+			<img class="flag" :src="item.icon" v-else />
 		</template>
 		<template #end>{{ getUserName }} </template>
 	</Menubar>
 	<Dialog v-model:visible="isCategoriesDialogOpen" modal>
 		<ul>
 			<li v-for="category in categories" :key="category.word_id">
-				{{ category.word }}
+				{{ getNameByCategory(category) }}
 			</li>
 		</ul>
 	</Dialog>
@@ -16,47 +17,62 @@
 
 <script setup lang="ts">
 import Menubar from 'primevue/menubar'
-import { type Ref, ref, computed } from 'vue'
+import { type Ref, ref, computed, type ComputedRef } from 'vue'
 import Dialog from 'primevue/dialog'
 import type { MenuItem } from 'primevue/menuitem'
 import { useRouter } from 'vue-router'
 import { categories } from '../assets/categories'
+import { useMainStore } from '../stores/mainStore'
+import { getNameByCategory } from '../helpers/getNameById'
 const router = useRouter()
+const mainStore = useMainStore()
 const isCategoriesDialogOpen: Ref<boolean> = ref(false)
-const items: Ref<MenuItem[]> = ref([
+const hunFlag: string = 'hun.webp'
+const engFlag: string = 'eng.webp'
+const actualFlag: Ref<string> = ref(hunFlag)
+const items: ComputedRef<MenuItem[]> = computed(() => [
 	{
-		label: 'Home',
+		label: mainStore.languageDict['home'],
 		root: true,
 		command: () => {
 			router.push('/')
 		},
 	},
 	{
-		label: 'Normal play',
+		label: mainStore.languageDict['normalPlay'],
 		root: true,
 		command: () => {
 			router.push('/normalplay')
 		},
 	},
 	{
-		label: 'Free play',
+		label: mainStore.languageDict['freePlay'],
 		root: true,
 		command: () => {
 			router.push('/freeplay')
 		},
 	},
 	{
-		label: 'Helper',
+		label: mainStore.languageDict['helper'],
 		root: true,
 		command: () => {
 			router.push('/helper')
 		},
 	},
 	{
-		label: 'Words',
+		label: mainStore.languageDict['words'],
 		root: true,
 		command: () => {
 			isCategoriesDialogOpen.value = true
+		},
+	},
+	{
+		icon: actualFlag.value,
+		root: true,
+		command: () => {
+			actualFlag.value = actualFlag.value === engFlag ? hunFlag : engFlag
+			mainStore.changeLanguage()
+			console.log(actualFlag.value)
 		},
 	},
 ])
@@ -67,21 +83,20 @@ const getUserName = computed(() => {
 </script>
 
 <style scoped>
-span {
-	margin: 1rem;
-}
-
-a {
-	margin: 5px;
-	cursor: pointer;
-}
-
 .item {
-	margin-right: 2vw;
+	padding-right: 4vw;
+}
+
+.item,
+.flag {
 	cursor: pointer;
 }
 
 ul {
 	list-style: none;
+}
+
+img {
+	max-height: 3vh;
 }
 </style>

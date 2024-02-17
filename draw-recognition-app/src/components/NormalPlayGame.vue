@@ -1,21 +1,24 @@
 <template>
 	<Dialog v-model:visible="end" modal :closable="false" :draggable="false">
-		Your final score is : {{ score }} / {{ selectedNumber }}
+		{{ mainStore.languageDict['yourFinalScoreIs'] }} {{ score }} /
+		{{ selectedNumber }}
 		<div>
-			<label>Do you want to play another game?</label>
-			<Button @click="restart()">Yes</Button>
-			<Button @click="quit()">No</Button>
+			<label>{{ mainStore.languageDict['playAnother'] }}</label>
+			<Button @click="restart()">{{ mainStore.languageDict['yes'] }}</Button>
+			<Button @click="quit()">{{ mainStore.languageDict['no'] }}</Button>
 		</div>
 	</Dialog>
-	<div>Score: {{ score }} / {{ currentIndex }}</div>
 	<div>
-		Your word:
+		{{ mainStore.languageDict['score'] }}: {{ score }} / {{ currentIndex }}
+	</div>
+	<div>
+		{{ mainStore.languageDict['yourWord'] }}:
 		<span style="font-weight: bold">
-			{{ selectedCategories[currentIndex].word }}</span
+			{{ getNameByCategory(selectedCategories[currentIndex]) }}</span
 		>
 	</div>
 	<div v-if="prediction">
-		My guess was:
+		{{ mainStore.languageDict['myGuessWas'] }}
 		<span
 			style="font-weight: bold"
 			:class="{ good: isCorrect, wrong: !isCorrect }"
@@ -23,7 +26,9 @@
 		>
 	</div>
 	<DrawingPalette ref="drawingPalette"></DrawingPalette>
-	<Button @click="makePrediction()">Predict</Button>
+	<Button @click="makePrediction()">{{
+		mainStore.languageDict['submit']
+	}}</Button>
 </template>
 
 <script setup lang="ts">
@@ -31,12 +36,13 @@ import { type Ref, ref, watch, toRefs } from 'vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import DrawingPalette from './DrawingPalette.vue'
-import { getNameById } from '../helpers/getNameById'
+import { getNameByCategory, getNameById } from '../helpers/getNameById'
 import usePlay from '../composables/usePlay'
 import { categories } from '../assets/categories'
 import type { Category } from '../models/Category'
 import { useRouter } from 'vue-router'
-
+import { useMainStore } from '../stores/mainStore'
+const mainStore = useMainStore()
 const { drawingPalette, predict } = usePlay()
 const score: Ref<number> = ref(0)
 const currentIndex: Ref<number> = ref(0)
@@ -97,7 +103,7 @@ const makePrediction = async () => {
 	if (isCorrect.value === true) {
 		score.value++
 	}
-	prediction.value = getNameById(predId)
+	prediction.value = getNameById(predId, categories)
 	if (currentIndex.value === selectedNumber.value - 1) {
 		end.value = true
 	} else {
