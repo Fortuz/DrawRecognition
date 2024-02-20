@@ -1,12 +1,23 @@
 <template>
-	<div v-if="prediction">
-		{{ mainStore.languageDict['iThinkItIs'] }}
-		<span style="font-weight: bold">{{ prediction }}</span>
+	<div class="freePlay">
+		<h2>{{ mainStore.languageDict['freePlay'] }}</h2>
+		<div class="cardStyle">
+			<div v-if="prediction" class="pred">
+				{{ mainStore.languageDict['iThinkItis'] }}
+				<span style="font-weight: bold">{{ prediction }}</span>
+			</div>
+			<div class="grid">
+				<div class="col-12">
+					<DrawingPalette ref="drawingPalette"></DrawingPalette>
+				</div>
+				<div class="col-12">
+					<Button class="button" @click="makePrediction()">{{
+						mainStore.languageDict['submit']
+					}}</Button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<DrawingPalette ref="drawingPalette"></DrawingPalette>
-	<Button @click="makePrediction()">{{
-		mainStore.languageDict['submit']
-	}}</Button>
 </template>
 
 <script setup lang="ts">
@@ -26,3 +37,15 @@ const makePrediction = async () => {
 	prediction.value = getNameById(predId, categories)
 }
 </script>
+
+<style scoped>
+.freePlay {
+	text-align: center;
+}
+
+
+.pred {
+	padding-bottom: 1vh;
+	padding-top: 0;
+}
+</style>

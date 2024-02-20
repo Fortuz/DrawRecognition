@@ -1,34 +1,46 @@
 <template>
 	<Dialog v-model:visible="end" modal :closable="false" :draggable="false">
-		{{ mainStore.languageDict['yourFinalScoreIs'] }} {{ score }} /
-		{{ selectedNumber }}
-		<div>
-			<label>{{ mainStore.languageDict['playAnother'] }}</label>
-			<Button @click="restart()">{{ mainStore.languageDict['yes'] }}</Button>
-			<Button @click="quit()">{{ mainStore.languageDict['no'] }}</Button>
+		<template #header>
+			<h2>
+				{{ mainStore.languageDict['yourFinalScoreIs'] }} {{ score }} /
+				{{ selectedNumber }}
+			</h2>
+		</template>
+		<label class="block">{{ mainStore.languageDict['playAnother'] }}</label>
+		<div class="block">
+			<Button class="button" @click="restart()">{{
+				mainStore.languageDict['yes']
+			}}</Button>
+			<Button class="button" @click="quit()">{{
+				mainStore.languageDict['no']
+			}}</Button>
 		</div>
 	</Dialog>
-	<div>
-		{{ mainStore.languageDict['score'] }}: {{ score }} / {{ currentIndex }}
+	<div class="normalPlayGame">
+		<h2>
+			{{ mainStore.languageDict['score'] }}: {{ score }} / {{ currentIndex }}
+		</h2>
+		<h3>
+			{{ mainStore.languageDict['yourWord'] }}:
+			<span style="font-weight: bold">
+				{{ getNameByCategory(selectedCategories[currentIndex]) }}</span
+			>
+		</h3>
+		<div v-if="prediction">
+			{{ mainStore.languageDict['myGuessWas'] }}
+			<span
+				style="font-weight: bold"
+				:class="{ good: isCorrect, wrong: !isCorrect }"
+				>{{ prediction }}</span
+			>
+		</div>
+		<div class="cardStyle">
+			<DrawingPalette ref="drawingPalette"></DrawingPalette>
+			<Button @click="makePrediction()" class="button">{{
+				mainStore.languageDict['submit']
+			}}</Button>
+		</div>
 	</div>
-	<div>
-		{{ mainStore.languageDict['yourWord'] }}:
-		<span style="font-weight: bold">
-			{{ getNameByCategory(selectedCategories[currentIndex]) }}</span
-		>
-	</div>
-	<div v-if="prediction">
-		{{ mainStore.languageDict['myGuessWas'] }}
-		<span
-			style="font-weight: bold"
-			:class="{ good: isCorrect, wrong: !isCorrect }"
-			>{{ prediction }}</span
-		>
-	</div>
-	<DrawingPalette ref="drawingPalette"></DrawingPalette>
-	<Button @click="makePrediction()">{{
-		mainStore.languageDict['submit']
-	}}</Button>
 </template>
 
 <script setup lang="ts">
@@ -113,7 +125,7 @@ const makePrediction = async () => {
 }
 
 const quit = () => {
-	router.push('/home')
+	router.push('/')
 }
 </script>
 
@@ -124,5 +136,9 @@ const quit = () => {
 
 .wrong {
 	color: red;
+}
+
+.normalPlayGame {
+	text-align: center;
 }
 </style>

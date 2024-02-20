@@ -7,10 +7,18 @@
 		<template #end>{{ getUserName }} </template>
 	</Menubar>
 	<Dialog v-model:visible="isCategoriesDialogOpen" modal>
+		<h2 class="catTitle">{{ mainStore.languageDict['words'] }}</h2>
 		<ul>
-			<li v-for="category in categories" :key="category.word_id">
-				{{ getNameByCategory(category) }}
-			</li>
+			<div class="grid">
+				<li
+					v-for="category in categories"
+					:key="category.word_id"
+					:class="gridCols"
+					class="category"
+				>
+					{{ getNameByCategory(category) }}
+				</li>
+			</div>
 		</ul>
 	</Dialog>
 </template>
@@ -30,6 +38,17 @@ const isCategoriesDialogOpen: Ref<boolean> = ref(false)
 const hunFlag: string = 'hun.webp'
 const engFlag: string = 'eng.webp'
 const actualFlag: Ref<string> = ref(hunFlag)
+
+const gridCols = computed(() => {
+	if (window.innerWidth <= 480) {
+		return 'col-6'
+	} else if (window.innerWidth <= 1024) {
+		return 'col-4'
+	} else {
+		return 'col-2'
+	}
+})
+
 const items: ComputedRef<MenuItem[]> = computed(() => [
 	{
 		label: mainStore.languageDict['home'],
@@ -98,5 +117,21 @@ ul {
 
 img {
 	max-height: 3vh;
+}
+
+.catTitle {
+	text-align: center;
+}
+
+@media (max-width: 1024px) {
+	.category {
+		margin: 0;
+	}
+}
+
+@media (min-width: 1025px) {
+	.category {
+		margin: 1vh 0vw;
+	}
 }
 </style>

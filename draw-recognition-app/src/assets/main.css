@@ -1,9 +1,52 @@
+:root{
+    --shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    --border: 1px solid #ddd;
+}
+
 body{
     font-family: var(--font-family);
     color: var(--text-color);
     /* background-image: url('bg.webp'); */
+    
+}
+
+.cardStyle {
+	border: var(--border);
+	box-shadow: var(--shadow);
+	border-radius: 5px;
+	text-align: center;
+	padding: 5vh 5vw;
+}
+
+@media (max-width: 480px) {
+	.cardStyle {
+		width: 90%;
+		margin: 3vh 5vw;
+	}
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+	.cardStyle {
+		width: 80%;
+		margin: 5vh auto;
+	}
+}
+
+@media (min-width: 1025px) {
+	.cardStyle {
+		width: 30%;
+		margin: 5vh auto;
+	}
 }
 
 .button{
     margin: 10px;
+}
+
+.cardStyle {
+	border: var(--border);
+	box-shadow: var(--shadow);
+	border-radius: 5px;
+	text-align: center;
+	padding: 5vh 5vw;
 }

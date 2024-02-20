@@ -1,6 +1,8 @@
 <template>
 	<Dialog v-model:visible="inMenu" modal :closable="false" :draggable="false">
-		<h2>{{ mainStore.languageDict['settings'] }}</h2>
+		<template #header>
+			<h2>{{ mainStore.languageDict['wordsCount'] }}</h2>
+		</template>
 		<InputNumber
 			v-model="categoryNumber"
 			input-id="categoryNumberInput"
@@ -10,7 +12,9 @@
 			:min="1"
 			:max="categories.length"
 		></InputNumber>
-		<Button @click="start">{{ mainStore.languageDict['start'] }}</Button>
+		<Button class="block button center" @click="start">{{
+			mainStore.languageDict['start']
+		}}</Button>
 	</Dialog>
 	<NormalPlayGame
 		@restart="onRestart()"
@@ -39,3 +43,9 @@ const onRestart = () => {
 	inMenu.value = true
 }
 </script>
+
+<style scoped>
+:deep(.p-inputnumber-input) {
+	width: 5vw;
+}
+</style>
