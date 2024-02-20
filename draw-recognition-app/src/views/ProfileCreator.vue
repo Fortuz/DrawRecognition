@@ -1,20 +1,15 @@
 <template>
 	<div class="profileCreator">
-		<h2 class="big">{{ mainStore.languageDict['typeYourName'] }}</h2>
+		<h2>{{ mainStore.languageDict['typeYourName'] }}</h2>
 		<div>
-			<span class="p-float-label big">
-				<InputText
-					id="playerNameInput"
-					size="large"
-					@change="checkErrors()"
-					v-model="playerName"
-					:class="{ 'p-invalid': isError }"
-				/>
-				<label for="playerNameInput">{{
-					mainStore.languageDict['yourName']
-				}}</label>
-			</span>
-			<Button class="p-button-lg" @click="submit()" :disabled="!valid">
+			<InputText
+				id="playerNameInput"
+				size="large"
+				@change="checkErrors()"
+				v-model="playerName"
+				:class="{ 'p-invalid': isError }"
+			/>
+			<Button class="button block" @click="submit()" :disabled="!valid">
 				{{ mainStore.languageDict['submit'] }}
 			</Button>
 		</div>
@@ -45,23 +40,32 @@ const checkErrors = () => {
 const submit = () => {
 	if (valid.value && playerName.value) {
 		localStorage.setItem('userNameToken', playerName.value)
-		router.push('/home')
+		router.push('/')
 	}
 }
 </script>
 
 <style scoped>
-.profileCreator {
-	margin: auto;
-	width: 25%;
-	padding-top: 30vh;
-}
-.big {
-	font-size: 2rem;
+@media (max-width: 480px) {
+	.profileCreator {
+		width: 75%;
+	}
 }
 
-:deep(.p-inputtext) {
-	width: 25rem;
-	height: 5rem;
+@media (min-width: 481px) and (max-width: 1024px) {
+	.profileCreator {
+		width: 50%;
+	}
+}
+
+@media (min-width: 1025px) {
+	.profileCreator {
+		width: 25%;
+	}
+}
+
+.profileCreator {
+	margin: auto;
+	padding-top: 30vh;
 }
 </style>
