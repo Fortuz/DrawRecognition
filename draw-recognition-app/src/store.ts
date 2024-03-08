@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
-import { EnglishWords, HungarianWords } from '../Langs'
-import { Language } from '../models/Language'
+import { EnglishWords, HungarianWords } from './Langs'
+import { Language } from './models/Language'
 export type RootState = {
 	languageDict: Record<string, string>
 	language: Language
 }
+export type MyStore = ReturnType<typeof useStore>
 
-export const useMainStore = defineStore('mainStore', {
+export const useStore = defineStore('store', {
 	state: () =>
 		({
 			languageDict: HungarianWords,
@@ -20,6 +21,14 @@ export const useMainStore = defineStore('mainStore', {
 				return
 			}
 			this.languageDict = HungarianWords
+		},
+		getLanguageDictItem(paramName: string): string {
+			return this.languageDict[paramName]
+		},
+	},
+	getters: {
+		getLanguage(): Language {
+			return this.language
 		},
 	},
 })

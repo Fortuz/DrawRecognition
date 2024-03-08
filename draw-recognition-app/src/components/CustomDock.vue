@@ -16,9 +16,9 @@
 <script setup lang="ts">
 import Dock from 'primevue/dock'
 import { type Ref, ref, computed, type ComputedRef } from 'vue'
-import { useMainStore } from '../stores/mainStore'
+import { useStore } from '../store'
 import { MenuItem } from 'primevue/menuitem'
-const mainStore = useMainStore()
+const store = useStore()
 const mode: Ref<boolean> = ref(true)
 const pencil: string = 'pencil.webp'
 const eraser: string = 'eraser.webp'
@@ -31,7 +31,7 @@ const emit = defineEmits<{
 
 const items: ComputedRef<MenuItem[]> = computed(() => [
 	{
-		label: mainStore.languageDict['pencil'],
+		label: store.getLanguageDictItem('pencil'),
 		icon: pencil,
 		command: () => {
 			mode.value = true
@@ -39,7 +39,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		},
 	},
 	{
-		label: mainStore.languageDict['eraser'],
+		label: store.getLanguageDictItem('eraser'),
 		icon: eraser,
 		command: () => {
 			mode.value = false
@@ -47,7 +47,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		},
 	},
 	{
-		label: mainStore.languageDict['clear'],
+		label: store.getLanguageDictItem('clear'),
 		icon: clear,
 		command: () => {
 			emit('clear')

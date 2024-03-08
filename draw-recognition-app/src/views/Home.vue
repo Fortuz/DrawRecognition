@@ -3,17 +3,17 @@
 		<ul>
 			<li class="cardStyle">
 				<RouterLink to="/normalplay">{{
-					mainStore.languageDict['normalPlay']
+					store.getLanguageDictItem('normalPlay')
 				}}</RouterLink>
 			</li>
 			<li class="cardStyle">
 				<RouterLink to="/freeplay">{{
-					mainStore.languageDict['freePlay']
+					store.getLanguageDictItem('freePlay')
 				}}</RouterLink>
 			</li>
 			<li class="cardStyle">
 				<RouterLink to="helper">{{
-					mainStore.languageDict['helper']
+					store.getLanguageDictItem('helper')
 				}}</RouterLink>
 			</li>
 		</ul>
@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import { useMainStore } from '../stores/mainStore'
+import { useStore } from '../store'
 
-const mainStore = useMainStore()
+const store = useStore()
 </script>
 
 <style scoped>

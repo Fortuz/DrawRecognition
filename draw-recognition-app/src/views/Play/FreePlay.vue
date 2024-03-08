@@ -1,9 +1,9 @@
 <template>
 	<div class="freePlay">
-		<h2>{{ mainStore.languageDict['freePlay'] }}</h2>
+		<h2>{{ store.getLanguageDictItem('freePlay') }}</h2>
 		<div class="cardStyle">
 			<div v-if="prediction" class="pred">
-				{{ mainStore.languageDict['iThinkItis'] }}
+				{{ store.getLanguageDictItem('iThinkItis') }}
 				<span style="font-weight: bold">{{ prediction }}</span>
 			</div>
 			<div class="grid">
@@ -12,7 +12,7 @@
 				</div>
 				<div class="col-12">
 					<Button class="button" @click="makePrediction()">{{
-						mainStore.languageDict['submit']
+						store.getLanguageDictItem('submit')
 					}}</Button>
 				</div>
 			</div>
@@ -26,15 +26,15 @@ import Button from 'primevue/button'
 import DrawingPalette from '../../components/DrawingPalette.vue'
 import { getNameById } from '../../helpers/getNameById'
 import usePlay from '../../composables/usePlay'
-import { useMainStore } from '../../stores/mainStore'
+import { useStore } from '../../store'
 import { categories } from '../../assets/categories'
-const mainStore = useMainStore()
+const store = useStore()
 const prediction: Ref<string | null> = ref(null)
 const { drawingPalette, predict } = usePlay()
 
 const makePrediction = async () => {
 	const predId = await predict()
-	prediction.value = getNameById(predId, categories)
+	prediction.value = getNameById(predId, categories, store)
 }
 </script>
 
@@ -42,7 +42,6 @@ const makePrediction = async () => {
 .freePlay {
 	text-align: center;
 }
-
 
 .pred {
 	padding-bottom: 1vh;

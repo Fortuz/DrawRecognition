@@ -1,12 +1,15 @@
 import { Category } from '../models/Category'
 import { Language } from '../models/Language'
-import { useMainStore } from '../stores/mainStore'
+import { MyStore } from '../store'
 
-export const getNameById = (id: number, categories: Category[]) => {
-	const mainStore = useMainStore()
+export const getNameById = (
+	id: number,
+	categories: Category[],
+	store: MyStore
+) => {
 	const word = categories.find((x) => x.word_id === id)
 	if (!word) throw new Error('Category not found!')
-	switch (mainStore.language) {
+	switch (store.getLanguage) {
 		case Language.English:
 			return word.word_eng
 		case Language.Hungarian:
@@ -14,9 +17,8 @@ export const getNameById = (id: number, categories: Category[]) => {
 	}
 }
 
-export const getNameByCategory = (category: Category) => {
-	const mainStore = useMainStore()
-	switch (mainStore.language) {
+export const getNameByCategory = (category: Category, store: MyStore) => {
+	switch (store.getLanguage) {
 		case Language.English:
 			return category.word_eng
 		case Language.Hungarian:

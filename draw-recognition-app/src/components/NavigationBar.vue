@@ -7,7 +7,7 @@
 		<template #end>{{ getUserName }} </template>
 	</Menubar>
 	<Dialog v-model:visible="isCategoriesDialogOpen" modal>
-		<h2 class="catTitle">{{ mainStore.languageDict['words'] }}</h2>
+		<h2 class="catTitle">{{ store.languageDict['words'] }}</h2>
 		<ul>
 			<div class="grid">
 				<li
@@ -16,7 +16,7 @@
 					:class="gridCols"
 					class="category"
 				>
-					{{ getNameByCategory(category) }}
+					{{ getNameByCategory(category, store) }}
 				</li>
 			</div>
 		</ul>
@@ -30,10 +30,10 @@ import Dialog from 'primevue/dialog'
 import type { MenuItem } from 'primevue/menuitem'
 import { useRouter } from 'vue-router'
 import { categories } from '../assets/categories'
-import { useMainStore } from '../stores/mainStore'
+import { useStore } from '../store'
 import { getNameByCategory } from '../helpers/getNameById'
 const router = useRouter()
-const mainStore = useMainStore()
+const store = useStore()
 const isCategoriesDialogOpen: Ref<boolean> = ref(false)
 const hunFlag: string = 'hun.webp'
 const engFlag: string = 'eng.webp'
@@ -51,35 +51,35 @@ const gridCols = computed(() => {
 
 const items: ComputedRef<MenuItem[]> = computed(() => [
 	{
-		label: mainStore.languageDict['home'],
+		label: store.getLanguageDictItem('home'),
 		root: true,
 		command: () => {
 			router.push('/')
 		},
 	},
 	{
-		label: mainStore.languageDict['normalPlay'],
+		label: store.getLanguageDictItem('normalPlay'),
 		root: true,
 		command: () => {
 			router.push('/normalplay')
 		},
 	},
 	{
-		label: mainStore.languageDict['freePlay'],
+		label: store.getLanguageDictItem('freePlay'),
 		root: true,
 		command: () => {
 			router.push('/freeplay')
 		},
 	},
 	{
-		label: mainStore.languageDict['helper'],
+		label: store.getLanguageDictItem('helper'),
 		root: true,
 		command: () => {
 			router.push('/helper')
 		},
 	},
 	{
-		label: mainStore.languageDict['words'],
+		label: store.getLanguageDictItem('words'),
 		root: true,
 		command: () => {
 			isCategoriesDialogOpen.value = true
@@ -90,7 +90,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		root: true,
 		command: () => {
 			actualFlag.value = actualFlag.value === engFlag ? hunFlag : engFlag
-			mainStore.changeLanguage()
+			store.changeLanguage()
 			console.log(actualFlag.value)
 		},
 	},
