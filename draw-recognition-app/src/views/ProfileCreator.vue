@@ -40,7 +40,11 @@ const checkErrors = () => {
 const submit = () => {
 	if (valid.value && playerName.value) {
 		localStorage.setItem('userNameToken', playerName.value)
-		router.push('/')
+		if (!localStorage.getItem('tutorialDoneToken')) {
+			router.push('/helper')
+		} else {
+			router.push('/')
+		}
 	}
 }
 </script>

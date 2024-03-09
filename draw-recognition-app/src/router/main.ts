@@ -15,9 +15,9 @@ const routes = [
 		children: [
 			{ path: '/normalplay', component: NormalPlay },
 			{ path: '/freeplay', component: FreePlay },
-			{ path: '/helper', component: Helper },
 		],
 	},
+	{ path: '/helper', component: Helper },
 ]
 
 export const router = createRouter({

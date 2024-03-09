@@ -3,7 +3,7 @@
 		<NavigationBar></NavigationBar>
 		<RouterView></RouterView>
 	</div>
-	<ProgressSpinner class="loadingScreen" v-else></ProgressSpinner>
+	<ProgressSpinner class="overlay" v-else></ProgressSpinner>
 </template>
 
 <script setup lang="ts">
