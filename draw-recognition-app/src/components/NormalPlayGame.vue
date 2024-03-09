@@ -26,7 +26,7 @@
 				{{ getNameByCategory(selectedCategories[currentIndex], store) }}</span
 			>
 		</h3>
-		<div v-if="prediction">
+		<div v-if="predId">
 			{{ store.getLanguageDictItem('myGuessWas') }}
 			<span
 				style="font-weight: bold"
@@ -48,17 +48,16 @@ import { type Ref, ref, watch, toRefs } from 'vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import DrawingPalette from './DrawingPalette.vue'
-import { getNameByCategory, getNameById } from '../helpers/getNameById'
+import { getNameByCategory } from '../helpers/getNameById'
 import usePlay from '../composables/usePlay'
 import { categories } from '../assets/categories'
 import type { Category } from '../models/Category'
 import { useRouter } from 'vue-router'
 import { useStore } from '../store'
 const store = useStore()
-const { drawingPalette, predict } = usePlay()
+const { drawingPalette, predict, predId, prediction } = usePlay(store)
 const score: Ref<number> = ref(0)
 const currentIndex: Ref<number> = ref(0)
-const prediction: Ref<string | null> = ref(null)
 const end: Ref<boolean> = ref(false)
 let selectedCategories: Category[]
 const router = useRouter()
@@ -88,7 +87,7 @@ const initialize = () => {
 	selectedCategories = getRandomCategories(categories, selectedNumber.value)
 	score.value = 0
 	currentIndex.value = 0
-	prediction.value = null
+	predId.value = null
 	end.value = false
 }
 
@@ -109,13 +108,13 @@ const getRandomCategories = (array: Category[], count: number): Category[] => {
 
 initialize()
 
-const makePrediction = async () => {
-	const predId = await predict()
-	isCorrect.value = predId === selectedCategories[currentIndex.value].word_id
+const makePrediction = () => {
+	predId.value = predict()
+	isCorrect.value =
+		predId.value === selectedCategories[currentIndex.value].word_id
 	if (isCorrect.value === true) {
 		score.value++
 	}
-	prediction.value = getNameById(predId, categories,store)
 	if (currentIndex.value === selectedNumber.value - 1) {
 		end.value = true
 	} else {
