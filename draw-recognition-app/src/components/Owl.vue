@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref, toRefs, ComputedRef, computed, watch } from 'vue'
+import { type Ref, ref, watch } from 'vue'
 import { useStore } from '../store'
 const store = useStore()
 const texts: Ref<string[]> = ref([
@@ -28,7 +28,6 @@ const actualFullText: Ref<string> = ref('')
 const fullText: Ref<boolean> = ref(false)
 const displayActionBar: Ref<boolean> = ref(false)
 const displayDrawingPalette: Ref<boolean> = ref(false)
-let end: boolean = false
 const emit = defineEmits<{
 	(e: 'end'): void
 }>()
