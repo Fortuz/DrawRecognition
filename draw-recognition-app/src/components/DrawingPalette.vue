@@ -19,19 +19,20 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref, onMounted } from 'vue'
+import { type Ref, ref, onMounted, toRaw } from 'vue'
 import CustomDock from '../components/CustomDock.vue'
 import * as tf from '@tensorflow/tfjs'
+import { useStore } from '../store'
 
 const canvas: Ref<HTMLCanvasElement | null> = ref(null)
 let ctx: CanvasRenderingContext2D | null = null
 let drawing: Ref<boolean> = ref(false)
 let mode: Ref<boolean> = ref(true)
-const modelPath: string = '/model.json'
+const store = useStore()
 
-const predict = async () => {
+const predict = () => {
 	if (!ctx || !canvas.value) return
-	const model = await tf.loadLayersModel(modelPath)
+	const model = toRaw(store.getModel!)
 	let tensor = tf.browser.fromPixels(canvas.value, 1)
 	tensor = tensor.transpose()
 	tensor = tf.reverse(tensor, 1)
