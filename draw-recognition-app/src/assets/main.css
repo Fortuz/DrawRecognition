@@ -7,6 +7,7 @@ body{
     font-family: var(--font-family);
     color: var(--text-color);
     /* background-image: url('bg.webp'); */
+	/* background-color: black; */
     
 }
 
@@ -21,7 +22,7 @@ body{
 @media (max-width: 480px) {
 	.cardStyle {
 		width: 90%;
-		margin: 0.2em 5vw;
+		margin: 2vh 5vw;
 		padding-bottom: 0;
 	}
 
@@ -48,9 +49,7 @@ body{
 @media (min-width: 1025px) {
 	.cardStyle {
 		width: 30%;
-		margin: 2vh auto;
-		padding-bottom: 0;
-		padding-top: 3vh;
+		margin: 5vh auto;
 	}
 
 	.button{
