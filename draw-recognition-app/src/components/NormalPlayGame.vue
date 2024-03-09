@@ -35,10 +35,16 @@
 			>
 		</div>
 		<div class="cardStyle">
-			<DrawingPalette ref="drawingPalette"></DrawingPalette>
-			<Button @click="makePrediction()" class="button">{{
-				store.getLanguageDictItem('submit')
-			}}</Button>
+			<div class="grid">
+				<div class="col-12">
+					<DrawingPalette ref="drawingPalette"></DrawingPalette>
+				</div>
+				<div class="col-12">
+					<Button @click="makePrediction()" class="button">{{
+						store.getLanguageDictItem('submit')
+					}}</Button>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

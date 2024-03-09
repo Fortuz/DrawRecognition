@@ -21,7 +21,12 @@ body{
 @media (max-width: 480px) {
 	.cardStyle {
 		width: 90%;
-		margin: 3vh 5vw;
+		margin: 1vh 5vw;
+		padding-bottom: 0;
+	}
+
+	.button{
+		margin: 0.2vh 0.2vw;
 	}
 }
 
@@ -30,26 +35,27 @@ body{
 		width: 80%;
 		margin: 5vh auto;
 	}
+
+	.button{
+		margin: 1vh 1vw;
+	}
 }
 
 @media (min-width: 1025px) {
 	.cardStyle {
 		width: 30%;
-		margin: 5vh auto;
+		margin: 2vh auto;
+		padding-bottom: 0;
+		padding-top: 3vh;
+	}
+
+	.button{
+		margin: 1vh 1vw;
 	}
 }
 
-.button{
-    margin: 10px;
-}
 
-.cardStyle {
-	border: var(--border);
-	box-shadow: var(--shadow);
-	border-radius: 5px;
-	text-align: center;
-	padding: 5vh 5vw;
-}
+
 
 .loadingScreen{
 	position: fixed;
