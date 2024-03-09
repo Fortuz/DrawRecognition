@@ -25,7 +25,6 @@ export const useStore = defineStore('store', {
 		async initializeStore(): Promise<void> {
 			this.startLoading()
 			this.model = (await tf.loadLayersModel(this.modelPath)) as tf.LayersModel
-			await new Promise((resolve) => setTimeout(resolve, 30000))
 			this.endLoading()
 		},
 		changeLanguage(): void {
