@@ -45,7 +45,15 @@ const onRestart = () => {
 </script>
 
 <style scoped>
-:deep(.p-inputnumber-input) {
-	width: 10vw;
+@media (max-width: 480px) {
+	:deep(.p-inputnumber-input) {
+		width: 10vw;
+	}
+}
+
+@media (min-width: 481px) {
+	:deep(.p-inputnumber-input) {
+		width: 5vw;
+	}
 }
 </style>
