@@ -32,12 +32,11 @@ import { useRouter } from 'vue-router'
 import { categories } from '../assets/categories'
 import { useStore } from '../store'
 import { getNameByCategory } from '../helpers/getNameById'
+import { storeToRefs } from 'pinia'
 const router = useRouter()
 const store = useStore()
 const isCategoriesDialogOpen: Ref<boolean> = ref(false)
-const hunFlag: string = 'hun.webp'
-const engFlag: string = 'eng.webp'
-const actualFlag: Ref<string> = ref(hunFlag)
+const { getActualFlag } = storeToRefs(store)
 
 const gridCols = computed(() => {
 	if (window.innerWidth <= 480) {
@@ -86,12 +85,10 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		},
 	},
 	{
-		icon: actualFlag.value,
+		icon: getActualFlag.value,
 		root: true,
 		command: () => {
-			actualFlag.value = actualFlag.value === engFlag ? hunFlag : engFlag
 			store.changeLanguage()
-			console.log(actualFlag.value)
 		},
 	},
 ])

@@ -1,29 +1,30 @@
 <template>
 	<div class="menu">
 		<ul>
-			<li class="cardStyle">
-				<RouterLink to="/normalplay">{{
-					store.getLanguageDictItem('normalPlay')
-				}}</RouterLink>
+			<li class="cardStyle clickable" @click="router.push('/normalplay')">
+				<p>{{ store.getLanguageDictItem('normalPlay') }}</p>
 			</li>
-			<li class="cardStyle">
-				<RouterLink to="/freeplay">{{
-					store.getLanguageDictItem('freePlay')
-				}}</RouterLink>
+			<li class="cardStyle clickable" @click="router.push('/freeplay')">
+				<p>{{ store.getLanguageDictItem('freePlay') }}</p>
 			</li>
-			<li class="cardStyle">
-				<RouterLink to="helper">{{
-					store.getLanguageDictItem('helper')
-				}}</RouterLink>
+			<li class="cardStyle clickable" @click="router.push('/helper')">
+				<p>{{ store.getLanguageDictItem('helper') }}</p>
+			</li>
+			<li class="cardStyle clickable" @click="store.changeLanguage()">
+				<img :src="getActualFlag" :alt="getActualFlag" />
 			</li>
 		</ul>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useStore } from '../store'
+import { useRouter } from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
+const { getActualFlag } = storeToRefs(store)
 </script>
 
 <style scoped>
@@ -56,5 +57,17 @@ li * {
 	text-decoration: none;
 	color: var(--text-color);
 	font-weight: bold;
+}
+
+img {
+	max-width: 20%;
+}
+
+p {
+	font-weight: bold;
+}
+
+.clickable {
+	cursor: pointer;
 }
 </style>

@@ -9,6 +9,9 @@ export type RootState = {
 	model: tf.LayersModel | null
 	modelPath: string
 	loading: boolean
+	hunFlag: string
+	engFlag: string
+	actualFlag: string
 }
 export type MyStore = ReturnType<typeof useStore>
 
@@ -20,6 +23,9 @@ export const useStore = defineStore('store', {
 			modelPath: '/model.json',
 			model: null,
 			loading: true,
+			hunFlag: 'hun.webp',
+			engFlag: 'eng.webp',
+			actualFlag: 'hun.webp',
 		}) as RootState,
 	actions: {
 		async initializeStore(): Promise<void> {
@@ -30,10 +36,12 @@ export const useStore = defineStore('store', {
 		changeLanguage(): void {
 			this.language = this.language === 1 ? 0 : 1
 			if (this.language === Language.English) {
+				this.actualFlag = this.engFlag
 				this.languageDict = EnglishWords
 				return
 			}
 			this.languageDict = HungarianWords
+			this.actualFlag = this.hunFlag
 		},
 		getLanguageDictItem(paramName: string): string {
 			return this.languageDict[paramName]
@@ -55,6 +63,9 @@ export const useStore = defineStore('store', {
 		getModel(): tf.LayersModel {
 			if (!this.model) throw new Error('Model is not loaded!')
 			return this.model as tf.LayersModel
+		},
+		getActualFlag(): string {
+			return this.actualFlag
 		},
 	},
 })

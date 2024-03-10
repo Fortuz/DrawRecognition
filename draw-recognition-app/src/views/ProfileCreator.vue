@@ -14,6 +14,9 @@
 			</Button>
 		</div>
 	</div>
+	<div class="cardStyle clickable" @click="store.changeLanguage()">
+		<img :src="getActualFlag" :alt="getActualFlag" />
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -22,11 +25,13 @@ import Button from 'primevue/button'
 import { type Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '../store'
+import { storeToRefs } from 'pinia'
 const playerName: Ref<string | null> = ref(null)
 const valid: Ref<boolean> = ref(false)
 const isError: Ref<boolean> = ref(false)
 const store = useStore()
 const router = useRouter()
+const { getActualFlag } = storeToRefs(store)
 const checkErrors = () => {
 	if (playerName.value?.trim() === '' || playerName.value === null) {
 		isError.value = true
@@ -72,5 +77,10 @@ const submit = () => {
 	margin: auto;
 	padding-top: 30vh;
 }
+img {
+	max-width: 20%;
+}
+.clickable {
+	cursor: pointer;
+}
 </style>
-../stores/store

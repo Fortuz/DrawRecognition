@@ -150,10 +150,6 @@ defineExpose({
 		width: 15vw;
 		margin-right: 1vw;
 	}
-
-	.talk-bubble * {
-		/* font-size: 0.8rem; */
-	}
 }
 
 @media (min-width: 481px) and (max-width: 1024px) {
