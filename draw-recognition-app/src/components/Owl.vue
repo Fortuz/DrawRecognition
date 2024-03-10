@@ -1,6 +1,6 @@
 <template>
 	<img src="/owl2.webp" />
-	<div class="talk-bubble round border" @click="onClick()">
+	<div class="talk-bubble round border" ref="chatBubble" @click="onClick()">
 		<div class="talktext">
 			<p>{{ typedText }}</p>
 		</div>
@@ -8,11 +8,13 @@
 </template>
 
 <script setup lang="ts">
-import { type Ref, ref, watch } from 'vue'
+import { type Ref, ref, watch, nextTick } from 'vue'
 import { useStore } from '../store'
 const store = useStore()
 const texts: Ref<string[]> = ref([
-	store.getLanguageDictItem('tutorialSpeech1'),
+	store
+		.getLanguageDictItem('tutorialSpeech1')
+		.replace('_', localStorage.getItem('userNameToken')!),
 	store.getLanguageDictItem('tutorialSpeech2'),
 	store.getLanguageDictItem('tutorialSpeech3'),
 	store.getLanguageDictItem('tutorialSpeech4'),
@@ -25,6 +27,7 @@ const typingSpeed: number = 20
 let typingInterval: NodeJS.Timeout | null = null
 const textIndex: Ref<number> = ref(0)
 const actualFullText: Ref<string> = ref('')
+const chatBubble: Ref<HTMLElement | null> = ref(null)
 const fullText: Ref<boolean> = ref(false)
 const displayActionBar: Ref<boolean> = ref(false)
 const displayDrawingPalette: Ref<boolean> = ref(false)
@@ -44,6 +47,25 @@ watch(textIndex, () => {
 		displayDrawingPalette.value = true
 	}
 })
+
+watch(typedText, () => {
+	if (chatBubble.value && shouldScroll()) {
+		scrollToBottom()
+	}
+})
+
+function scrollToBottom() {
+	nextTick(() => {
+		if (chatBubble.value) {
+			chatBubble.value.scrollTop = chatBubble.value.scrollHeight
+		}
+	})
+}
+
+function shouldScroll(): boolean {
+	const bubble = chatBubble.value
+	return bubble ? bubble.scrollHeight > bubble.clientHeight : false
+}
 
 function typeText() {
 	if (textIndex.value === texts.value.length) return
