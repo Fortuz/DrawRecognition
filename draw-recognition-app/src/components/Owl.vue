@@ -21,7 +21,7 @@ const texts: Ref<string[]> = ref([
 	store.getLanguageDictItem('tutorialSpeech7'),
 ])
 const typedText: Ref<string> = ref('')
-const typingSpeed: number = 100
+const typingSpeed: number = 20
 let typingInterval: NodeJS.Timeout | null = null
 const textIndex: Ref<number> = ref(0)
 const actualFullText: Ref<string> = ref('')
@@ -87,23 +87,6 @@ defineExpose({
 </script>
 
 <style scoped>
-img {
-	width: 5vw;
-	margin-right: 1vw;
-}
-
-.talk-bubble {
-	display: inline-block;
-	position: relative;
-	background-color: var(--bg-color-secondary);
-	width: 15vw;
-	overflow-y: scroll;
-	height: 15vh;
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-	cursor: pointer;
-}
-
 .talk-bubble::-webkit-scrollbar {
 	display: none;
 }
@@ -127,5 +110,63 @@ img {
 	border-radius: 30px;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
+}
+
+@media (max-width: 480px) {
+	.talk-bubble {
+		display: inline-block;
+		position: relative;
+		background-color: var(--bg-color-secondary);
+		width: 50vw;
+		overflow-y: scroll;
+		height: 20vh;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		cursor: pointer;
+	}
+	img {
+		width: 15vw;
+		margin-right: 1vw;
+	}
+
+	.talk-bubble * {
+		/* font-size: 0.8rem; */
+	}
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+	img {
+		width: 15vw;
+		margin-right: 1vw;
+	}
+	.talk-bubble {
+		display: inline-block;
+		position: relative;
+		background-color: var(--bg-color-secondary);
+		width: 45vw;
+		overflow-y: scroll;
+		height: 20vh;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		cursor: pointer;
+	}
+}
+
+@media (min-width: 1025px) {
+	img {
+		width: 5vw;
+		margin-right: 1vw;
+	}
+	.talk-bubble {
+		display: inline-block;
+		position: relative;
+		background-color: var(--bg-color-secondary);
+		width: 25vw;
+		overflow-y: scroll;
+		height: 20vh;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		cursor: pointer;
+	}
 }
 </style>

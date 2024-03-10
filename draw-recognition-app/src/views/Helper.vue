@@ -29,14 +29,42 @@ function onEnd() {
 </script>
 
 <style scoped>
-.owl {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+@media (max-width: 480px) {
+	.owl {
+		position: fixed;
+		top: 21vh;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+	.owl {
+		position: fixed;
+		top: 10vh;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@media (min-width: 1025px) {
+	.owl {
+		position: fixed;
+		top: 15vh;
+		left: 0;
+		width: 45vw;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }
 </style>
