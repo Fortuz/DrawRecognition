@@ -33,7 +33,12 @@ body{
 	}
 
 	body *{
-		font-size: 0.8rem;
+		font-size: 0.75rem;
+
+	}
+
+	body h1, body h2, body h3{
+		margin: 0;
 	}
 }
 

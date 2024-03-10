@@ -16,6 +16,7 @@
 			store.getLanguageDictItem('start')
 		}}</Button>
 	</Dialog>
+	<img src="/owl2.webp" />
 	<NormalPlayGame
 		@restart="onRestart()"
 		v-if="!inMenu && categoryNumber"
@@ -54,6 +55,33 @@ const onRestart = () => {
 @media (min-width: 481px) {
 	:deep(.p-inputnumber-input) {
 		width: 5vw;
+	}
+}
+
+@media (max-width: 480px) {
+	img {
+		width: 12vw;
+		position: fixed;
+		top: 13vh;
+		left: 8vw;
+	}
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+	img {
+		width: 10vw;
+		position: fixed;
+		top: 10vh;
+		left: 10vw;
+	}
+}
+
+@media (min-width: 1025px) {
+	img {
+		width: 5vw;
+		position: fixed;
+		top: 10vh;
+		left: 35vw;
 	}
 }
 </style>

@@ -32,10 +32,10 @@ function onEnd() {
 @media (max-width: 480px) {
 	.owl {
 		position: fixed;
-		top: 21vh;
+		top: 60vh;
 		left: 0;
 		width: 100%;
-		height: 100%;
+		height: 30%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -45,10 +45,10 @@ function onEnd() {
 @media (min-width: 481px) and (max-width: 1024px) {
 	.owl {
 		position: fixed;
-		top: 10vh;
+		top: 50vh;
 		left: 0;
 		width: 100%;
-		height: 100%;
+		height: 30%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
