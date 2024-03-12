@@ -8,7 +8,7 @@ export default function usePlay(store: MyStore) {
 	const predId: Ref<number | null> = ref(null)
 
 	const prediction: ComputedRef<string | null> = computed(() => {
-		if (!predId.value) return null
+		if (predId.value === null) return null
 		console.log(predId.value)
 		return getNameById(predId.value, categories, store)
 	})

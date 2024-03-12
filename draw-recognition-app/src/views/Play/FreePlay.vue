@@ -2,7 +2,7 @@
 	<div class="freePlay">
 		<h2>{{ store.getLanguageDictItem('freePlay') }}</h2>
 		<div class="cardStyle">
-			<div v-if="predId" class="pred">
+			<div v-if="prediction" class="pred">
 				{{ store.getLanguageDictItem('iThinkItis') }}
 				<span style="font-weight: bold">{{ prediction }}</span>
 			</div>

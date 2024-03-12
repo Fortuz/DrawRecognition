@@ -26,7 +26,7 @@
 				{{ getNameByCategory(selectedCategories[currentIndex], store) }}</span
 			>
 		</h3>
-		<div v-if="predId">
+		<div v-if="prediction">
 			{{ store.getLanguageDictItem('myGuessWas') }}
 			<span
 				style="font-weight: bold"
@@ -91,7 +91,7 @@ const restart = () => {
 
 const initialize = () => {
 	selectedCategories = getRandomCategories(categories, selectedNumber.value)
-	score.value = 0
+		score.value = 0
 	currentIndex.value = 0
 	predId.value = null
 	end.value = false
@@ -116,7 +116,7 @@ initialize()
 
 const makePrediction = () => {
 	predId.value = predict()
-	isCorrect.value =
+		isCorrect.value =
 		predId.value === selectedCategories[currentIndex.value].word_id
 	if (isCorrect.value === true) {
 		score.value++
