@@ -1,7 +1,7 @@
 <template>
 	<NavigationBar v-if="owl?.displayActionBar"></NavigationBar>
 	<div class="cardStyle" v-if="owl?.displayDrawingPalette">
-		<DrawingPalette></DrawingPalette>
+		<DrawingPalette class="drawingPalette"></DrawingPalette>
 	</div>
 	<div class="owl">
 		<Owl @end="onEnd()" ref="owl"></Owl>

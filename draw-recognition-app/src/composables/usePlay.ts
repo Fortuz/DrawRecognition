@@ -1,4 +1,4 @@
-import { type Ref, ref, ComputedRef, computed, watch } from 'vue'
+import { type Ref, ref, ComputedRef, computed } from 'vue'
 import DrawingPalette from '../components/DrawingPalette.vue'
 import { getNameById } from '../helpers/getNameById'
 import { categories } from '../assets/categories'
@@ -11,10 +11,6 @@ export default function usePlay(store: MyStore) {
 		if (predId.value === null) return null
 		console.log(predId.value)
 		return getNameById(predId.value, categories, store)
-	})
-
-	watch(predId, () => {
-		console.log(predId.value)
 	})
 
 	const drawingPalette: Ref<InstanceType<typeof DrawingPalette> | null> =

@@ -4,7 +4,7 @@
 			<a
 				v-tooltip.top="item.label"
 				href="#"
-				class="p-dock-link"
+				class="dock-link"
 				@click="onItemClick($event, item)"
 			>
 				<img :src="item.icon" style="width: 100%" />
