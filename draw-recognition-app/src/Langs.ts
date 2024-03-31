@@ -5,7 +5,7 @@ export const HungarianWords: Record<string, string> = {
 	home: 'Főoldal',
 	normalPlay: 'Normál játék',
 	freePlay: 'Szabad játék',
-	helper: 'Súgó',
+	helper: 'Oktatás',
 	words: 'Szavak',
 	yourFinalScoreIs: 'A végső pontszámod:',
 	playAnother: 'Szeretnél új játékot kezdeni?',
@@ -21,7 +21,7 @@ export const HungarianWords: Record<string, string> = {
 	typeYourName: 'Írd be a nevedet',
 	yourName: 'A neved',
 	tutorialSpeech1:
-		'Szia _! Az én nevem Bagcsi és szeretném bemutatni neked a játékomat. Ennek a játéknak a lényege, hogy olyan ügyesen tudj rajzolni, hogy én ki tudjam azt találni. 2 játékmód közül tudsz választani. Kattints a folytatáshoz.',
+		'Szia _! Az én nevem Bagoly és szeretném bemutatni neked a játékomat. Ennek a játéknak a lényege, hogy olyan ügyesen tudj rajzolni, hogy én ki tudjam azt találni. 2 játékmód közül tudsz választani. Kattints a folytatáshoz.',
 	tutorialSpeech2:
 		'A szabad játékmódban Te találhatod ki, hogy mit szeretnél rajzolni, nekem pedig fel kell ismernem azt. Kattints a folytatáshoz.',
 	tutorialSpeech3:
@@ -43,7 +43,7 @@ export const EnglishWords: Record<string, string> = {
 	home: 'Home',
 	normalPlay: 'Normal play',
 	freePlay: 'Free play',
-	helper: 'Helper',
+	helper: 'Tutorial',
 	words: 'Words',
 	yourFinalScoreIs: 'Your final score:',
 	playAnother: 'Would you like to play another?',
@@ -59,7 +59,7 @@ export const EnglishWords: Record<string, string> = {
 	typeYourName: 'Type your name',
 	yourName: 'Your name',
 	tutorialSpeech1:
-		"Hi _! My name is Bagcsi, and I'd like to introduce you to my game. The essence of this game is to draw so skillfully that I can guess what it is. You can choose from 2 game modes. Click to continue.",
+		"Hi _! My name is Bagoly, and I'd like to introduce you to my game. The essence of this game is to draw so skillfully that I can guess what it is. You can choose from 2 game modes. Click to continue.",
 	tutorialSpeech2:
 		'In free play mode, you can decide what you want to draw, and I have to recognize it. Click to continue.',
 	tutorialSpeech3:

@@ -1,7 +1,9 @@
 <template>
 	<div class="profileCreator">
+		<!-- cim -->
 		<h2>{{ store.getLanguageDictItem('typeYourName') }}</h2>
 		<div>
+			<!-- nev beviteli mezo -->
 			<InputText
 				id="playerNameInput"
 				size="large"
@@ -9,11 +11,13 @@
 				v-model="playerName"
 				:class="{ 'p-invalid': isError }"
 			/>
+			<!-- submit gomb -->
 			<Button class="button block" @click="submit()" :disabled="!valid">
 				{{ store.getLanguageDictItem('submit') }}
 			</Button>
 		</div>
 	</div>
+	<!-- nyelvvaltas -->
 	<div class="cardStyle clickable" @click="store.changeLanguage()">
 		<img :src="getActualFlag" :alt="getActualFlag" />
 	</div>
@@ -26,17 +30,19 @@ import { type Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '../store'
 import { storeToRefs } from 'pinia'
-const playerName: Ref<string | null> = ref(null)
-const valid: Ref<boolean> = ref(false)
-const isError: Ref<boolean> = ref(false)
-const store = useStore()
-const router = useRouter()
-const { getActualFlag } = storeToRefs(store)
+const playerName: Ref<string | null> = ref(null) // felhasznalonev
+const valid: Ref<boolean> = ref(false) // ervenyesen adta - e meg es lehet - e tovabbmenni
+const isError: Ref<boolean> = ref(false) // ha ervenytelen
+const store = useStore() // pinia store
+const router = useRouter() // router objektum
+const { getActualFlag } = storeToRefs(store) // store fuggveny referencia
 const checkErrors = () => {
 	if (playerName.value?.trim() === '' || playerName.value === null) {
+		// ha ures vagy null akkor ervenytelen
 		isError.value = true
 		valid.value = false
 	} else {
+		// amugy OK
 		isError.value = false
 		valid.value = true
 	}
@@ -44,11 +50,13 @@ const checkErrors = () => {
 
 const submit = () => {
 	if (valid.value && playerName.value) {
-		localStorage.setItem('userNameToken', playerName.value)
+		// ha valid
+		localStorage.setItem('userNameToken', playerName.value) // elmentjuk localstoregeban a nevet
 		if (!localStorage.getItem('tutorialDoneToken')) {
-			router.push('/helper')
+			// ellenorzes, hogy teljesitette - e az oktatast
+			router.push('/tutorial') // ha nem, akkor oda navigalas
 		} else {
-			router.push('/')
+			router.push('/') // amugy mehet tovabb
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ProfileCreator from '../views/ProfileCreator.vue'
-import Helper from '../views/Helper.vue'
+import Tutorial from '../views/Tutorial.vue'
 import FreePlay from '../views/Play/FreePlay.vue'
 import NormalPlay from '../views/Play/NormalPlay.vue'
 import Home from '../views/Home.vue'
@@ -17,7 +17,7 @@ const routes = [
 			{ path: '/freeplay', component: FreePlay },
 		],
 	},
-	{ path: '/helper', component: Helper },
+	{ path: '/tutorial', component: Tutorial },
 ]
 
 export const router = createRouter({
@@ -27,12 +27,13 @@ export const router = createRouter({
 
 router.beforeEach((to, _, next) => {
 	if (!userIsDefined() && to.fullPath !== '/profilecreator') {
+		// ha meg nincs felhasznalonev, akkor a bejelentkezo oldalra navigalas
 		next({ path: '/profilecreator' })
 	} else {
-		next()
+		next() // amugy mehet tovabb
 	}
 })
 
 const userIsDefined = () => {
-	return !!localStorage.getItem('userNameToken')
+	return !!localStorage.getItem('userNameToken') // ellenorzi, hogy van - e mar felhasznalonev
 }

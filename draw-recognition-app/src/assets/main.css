@@ -8,8 +8,6 @@
 body{
     font-family: var(--font-family);
     color: var(--text-color);
-    /* background-image: url('bg.webp'); */
-	/* background-color: black; */
 	background-color: var(--bg-color);
 }
 
@@ -23,6 +21,13 @@ body{
 }
 
 @media (max-width: 480px) {
+	.owlImage {
+		width: 12vw;
+		position: fixed;
+		top: 13vh;
+		left: 8vw;
+	}
+
 	.cardStyle {
 		width: 90%;
 		margin: 2vh 5vw;
@@ -51,6 +56,12 @@ body{
 	.button{
 		margin: 1vh 1vw;
 	}
+	.owlImage {
+		width: 10vw;
+		position: fixed;
+		top: 10vh;
+		left: 10vw;
+	}
 }
 
 @media (min-width: 1025px) {
@@ -61,6 +72,12 @@ body{
 
 	.button{
 		margin: 1vh 1vw;
+	}
+	.owlImage {
+		width: 5vw;
+		position: fixed;
+		top: 10vh;
+		left: 35vw;
 	}
 }
 
@@ -74,4 +91,7 @@ body{
     justify-content: center;
     align-items: center;
     z-index: 999; 
+	opacity: 20%;
+	background-color: black;
 }
+

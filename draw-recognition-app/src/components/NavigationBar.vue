@@ -6,6 +6,7 @@
 		</template>
 		<template #end>{{ getUserName }} </template>
 	</Menubar>
+	<!-- ez tartalmazza a szavak listajat -->
 	<Dialog v-model:visible="isCategoriesDialogOpen" modal>
 		<h2 class="catTitle">{{ store.languageDict['words'] }}</h2>
 		<ul>
@@ -33,12 +34,13 @@ import { categories } from '../assets/categories'
 import { useStore } from '../store'
 import { getNameByCategory } from '../helpers/getNameById'
 import { storeToRefs } from 'pinia'
-const router = useRouter()
-const store = useStore()
-const isCategoriesDialogOpen: Ref<boolean> = ref(false)
-const { getActualFlag } = storeToRefs(store)
+const router = useRouter() // programmatikus router
+const store = useStore() // pinia store
+const isCategoriesDialogOpen: Ref<boolean> = ref(false) // szavak listaja nyitvan van - e
+const { getActualFlag } = storeToRefs(store) // atvesszuk a 'getActualFlag' metodus referenciajat a storebol
 
 const gridCols = computed(() => {
+	// kijelzo meretetol fuggoen jelennek meg az oszlopok
 	if (window.innerWidth <= 480) {
 		return 'col-6'
 	} else if (window.innerWidth <= 1024) {
@@ -48,12 +50,13 @@ const gridCols = computed(() => {
 	}
 })
 
+// primevue MenuItem lista
 const items: ComputedRef<MenuItem[]> = computed(() => [
 	{
-		label: store.getLanguageDictItem('home'),
-		root: true,
+		label: store.getLanguageDictItem('home'), // cim
+		root: true, // mindegyik csak egy lepcsos
 		command: () => {
-			router.push('/')
+			router.push('/') // atnavigalunk a megfelelo oldalra
 		},
 	},
 	{
@@ -74,27 +77,27 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		label: store.getLanguageDictItem('helper'),
 		root: true,
 		command: () => {
-			router.push('/helper')
+			router.push('/tutorial')
 		},
 	},
 	{
 		label: store.getLanguageDictItem('words'),
 		root: true,
 		command: () => {
-			isCategoriesDialogOpen.value = true
+			isCategoriesDialogOpen.value = true // itt megjelenitjuk szavakat tartalmazo dialogot
 		},
 	},
 	{
 		icon: getActualFlag.value,
 		root: true,
 		command: () => {
-			store.changeLanguage()
+			store.changeLanguage() // atvaltjuk a nyelvet
 		},
 	},
 ])
 
 const getUserName = computed(() => {
-	return localStorage.getItem('userNameToken')
+	return localStorage.getItem('userNameToken') // elmentjuk a felhasznalonevet a localstoregeben
 })
 </script>
 

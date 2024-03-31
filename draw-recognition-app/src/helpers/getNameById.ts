@@ -3,13 +3,16 @@ import { Language } from '../models/Language'
 import { MyStore } from '../store'
 
 export const getNameById = (
+	// szo kereses az id alapjan
 	id: number,
 	categories: Category[],
 	store: MyStore
 ) => {
 	const word = categories.find((x) => x.word_id === id)
-	if (!word) throw new Error('Category not found!')
-	switch (store.getLanguage) {
+	if (!word) throw new Error('Category not found!') // hibakezeles
+	switch (
+		store.getLanguage // meghatarozzuk a visszaadando szot a store nyelve alapjan
+	) {
 		case Language.English:
 			return word.word_eng
 		case Language.Hungarian:
@@ -18,7 +21,10 @@ export const getNameById = (
 }
 
 export const getNameByCategory = (category: Category, store: MyStore) => {
-	switch (store.getLanguage) {
+	// szo kereses maga a Category objektum alapjan
+	switch (
+		store.getLanguage // meghatarozzuk a visszaadando szot a store nyelve alapjan
+	) {
 		case Language.English:
 			return category.word_eng
 		case Language.Hungarian:

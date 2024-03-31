@@ -1,15 +1,20 @@
 <template>
 	<div class="menu">
+		<!-- navigacios elemek egy listaban -->
 		<ul>
+			<!-- normal jatek -->
 			<li class="cardStyle clickable" @click="router.push('/normalplay')">
 				<p>{{ store.getLanguageDictItem('normalPlay') }}</p>
 			</li>
+			<!-- szabad jatek -->
 			<li class="cardStyle clickable" @click="router.push('/freeplay')">
 				<p>{{ store.getLanguageDictItem('freePlay') }}</p>
 			</li>
-			<li class="cardStyle clickable" @click="router.push('/helper')">
+			<!-- oktatas -->
+			<li class="cardStyle clickable" @click="router.push('/tutorial')">
 				<p>{{ store.getLanguageDictItem('helper') }}</p>
 			</li>
+			<!-- nyelvvaltas -->
 			<li class="cardStyle clickable" @click="store.changeLanguage()">
 				<img :src="getActualFlag" :alt="getActualFlag" />
 			</li>
@@ -21,10 +26,9 @@
 import { storeToRefs } from 'pinia'
 import { useStore } from '../store'
 import { useRouter } from 'vue-router'
-
-const store = useStore()
-const router = useRouter()
-const { getActualFlag } = storeToRefs(store)
+const store = useStore() // pinia store
+const router = useRouter() // router objektum
+const { getActualFlag } = storeToRefs(store) // store fuggveny referencia
 </script>
 
 <style scoped>

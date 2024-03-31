@@ -1,4 +1,5 @@
 <template>
+	
 	<Dock :model="items">
 		<template #icon="{ item }">
 			<a
@@ -18,25 +19,26 @@ import Dock from 'primevue/dock'
 import { type Ref, ref, computed, type ComputedRef } from 'vue'
 import { useStore } from '../store'
 import { MenuItem } from 'primevue/menuitem'
-const store = useStore()
-const mode: Ref<boolean> = ref(true)
-const pencil: string = 'pencil.webp'
-const eraser: string = 'eraser.webp'
-const clear: string = 'delete.webp'
+const store = useStore() // pinia store
+const mode: Ref<boolean> = ref(true) // igaz ha rajzol, hamis ha torol
+const pencil: string = 'pencil.png' // ceruza kep eleresi utja
+const eraser: string = 'eraser.png' // radir kep eleresi utja
+const clear: string = 'delete.png' // torles kep eleresi utja
 
 const emit = defineEmits<{
 	(e: 'change', value: boolean): void
 	(e: 'clear'): void
-}>()
+}>() //esemenyek
 
+// Primevue MenuItem tipusu lista
 const items: ComputedRef<MenuItem[]> = computed(() => [
 	{
-		label: store.getLanguageDictItem('pencil'),
-		icon: pencil,
+		label: store.getLanguageDictItem('pencil'), // cim
+		icon: pencil, // kep
 		command: () => {
-			mode.value = true
-			emit('change', mode.value)
-		},
+			mode.value = true // igazra allitjuk
+			emit('change', mode.value) // kivaltjuk az esemenyt
+		}, 
 	},
 	{
 		label: store.getLanguageDictItem('eraser'),
@@ -57,8 +59,8 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 
 const onItemClick = (event: any, item: any) => {
 	if (item.command) {
-		item.command()
+		item.command() // vegrehajtjuk az elemhez tartozo command fuggvenyt
 	}
-	event.preventDefault()
+	event.preventDefault() // minden mas viselkedest elhagyunk
 }
 </script>

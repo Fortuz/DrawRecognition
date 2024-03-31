@@ -6,7 +6,7 @@ import PrimeVue from 'primevue/config'
 import FreePlay from '../Play/FreePlay.vue'
 import NormalPlay from '../Play/NormalPlay.vue'
 import { config } from '@vue/test-utils'
-import Helper from '../Helper.vue'
+import Tutorial from '../Tutorial.vue'
 import Owl from '../../components/Owl.vue'
 import DrawingPalette from '../../components/DrawingPalette.vue'
 import Home from '../Home.vue'
@@ -75,11 +75,11 @@ describe('FreePlay', () => {
 	})
 })
 
-describe('Helper', () => {
+describe('Tutorial', () => {
 	let wrapper: any
 
 	beforeEach(() => {
-		wrapper = mount(Helper, {
+		wrapper = mount(Tutorial, {
 			global: {
 				plugins: [setActivePinia(createPinia())],
 			},
@@ -107,7 +107,7 @@ describe('Helper', () => {
 	})
 
 	it('does not show DrawingPalette when displayDrawingPalette is false', async () => {
-		const wrapper = mount(Helper, {
+		const wrapper = mount(Tutorial, {
 			props: {
 				displayDrawingPalette: false,
 			},
@@ -137,9 +137,9 @@ describe('Home', () => {
 		expect(mockPush).toBeCalledWith('/freeplay')
 	})
 
-	it('navigates to /helper on helper click', async () => {
+	it('navigates to /tutorial on helper click', async () => {
 		await wrapper.findAll('.clickable')[2].trigger('click')
-		expect(mockPush).toBeCalledWith('/helper')
+		expect(mockPush).toBeCalledWith('/tutorial')
 	})
 
 	it('calls changeLanguage method on language flag click', async () => {
@@ -196,7 +196,7 @@ describe('ProfileCreator', () => {
 		localStorage.setItem('userNameToken', 'Test Name')
 		await wrapper.find('.button').trigger('click')
 		expect(localStorage.getItem('userNameToken')).toBe('Test Name')
-		expect(mockPush).toHaveBeenCalledWith('/helper')
+		expect(mockPush).toHaveBeenCalledWith('/tutorial')
 		localStorage.setItem('tutorialDoneToken', 'true')
 		await wrapper.find('.button').trigger('click')
 		expect(mockPush).toHaveBeenCalledWith('/')

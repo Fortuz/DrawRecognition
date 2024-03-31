@@ -1,8 +1,11 @@
 <template>
+	<!-- ez fog megjelenni a menube lepeskor -->
 	<Dialog v-model:visible="inMenu" modal :closable="false" :draggable="false">
 		<template #header>
+			<!-- cim -->
 			<h2>{{ store.getLanguageDictItem('wordsCount') }}</h2>
 		</template>
+		<!-- szam beviteli mezo -->
 		<InputNumber
 			v-model="categoryNumber"
 			input-id="categoryNumberInput"
@@ -12,11 +15,14 @@
 			:min="1"
 			:max="categories.length"
 		></InputNumber>
+		<!-- indito gomb -->
 		<Button class="block button center" @click="start">{{
 			store.getLanguageDictItem('start')
 		}}</Button>
 	</Dialog>
-	<img src="/owl2.webp" />
+	<!-- bagoly kep -->
+	<img class="owlImage" src="/owl2.webp" />
+	<!-- a normal jatek maga -->
 	<NormalPlayGame
 		@restart="onRestart()"
 		v-if="!inMenu && categoryNumber"
@@ -33,14 +39,16 @@ import Button from 'primevue/button'
 import InputNumber from 'primevue/inputnumber'
 import { useStore } from '../../store'
 const store = useStore()
-const inMenu: Ref<boolean> = ref(true)
-const categoryNumber: Ref<number> = ref(5)
+const inMenu: Ref<boolean> = ref(true) // eppen a menuben vagyunk - e
+const categoryNumber: Ref<number> = ref(5) // valasztott kategoriak szama
 
 const start = () => {
+	// inditjuk a jatekot
 	inMenu.value = false
 }
 
 const onRestart = () => {
+	// restart esemenykezelo
 	inMenu.value = true
 }
 </script>
@@ -58,30 +66,5 @@ const onRestart = () => {
 	}
 }
 
-@media (max-width: 480px) {
-	img {
-		width: 12vw;
-		position: fixed;
-		top: 13vh;
-		left: 8vw;
-	}
-}
 
-@media (min-width: 481px) and (max-width: 1024px) {
-	img {
-		width: 10vw;
-		position: fixed;
-		top: 10vh;
-		left: 10vw;
-	}
-}
-
-@media (min-width: 1025px) {
-	img {
-		width: 5vw;
-		position: fixed;
-		top: 10vh;
-		left: 35vw;
-	}
-}
 </style>

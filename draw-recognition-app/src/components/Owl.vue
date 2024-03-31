@@ -1,7 +1,9 @@
 <template>
 	<img src="/owl2.webp" />
+	<!-- szovegdoboz -->
 	<div class="talk-bubble round border" ref="chatBubble" @click="onClick()">
 		<div class="talktext">
+			<!-- dinamikusan megjeleniti a szoveget -->
 			<p>{{ typedText }}</p>
 		</div>
 	</div>
@@ -10,7 +12,7 @@
 <script setup lang="ts">
 import { type Ref, ref, watch, nextTick } from 'vue'
 import { useStore } from '../store'
-const store = useStore()
+const store = useStore() // pinia store
 const texts: Ref<string[]> = ref([
 	store
 		.getLanguageDictItem('tutorialSpeech1')
@@ -18,43 +20,50 @@ const texts: Ref<string[]> = ref([
 	store.getLanguageDictItem('tutorialSpeech2'),
 	store.getLanguageDictItem('tutorialSpeech3'),
 	store.getLanguageDictItem('tutorialSpeech4'),
-	store.getLanguageDictItem('tutorialSpeech5'), //navbar
-	store.getLanguageDictItem('tutorialSpeech6'), //drawingpalette
+	store.getLanguageDictItem('tutorialSpeech5'),
+	store.getLanguageDictItem('tutorialSpeech6'),
 	store.getLanguageDictItem('tutorialSpeech7'),
-])
-const typedText: Ref<string> = ref('')
-const typingSpeed: number = 20
-let typingInterval: NodeJS.Timeout | null = null
-const textIndex: Ref<number> = ref(0)
-const actualFullText: Ref<string> = ref('')
-const chatBubble: Ref<HTMLElement | null> = ref(null)
-const fullText: Ref<boolean> = ref(false)
-const displayActionBar: Ref<boolean> = ref(false)
-const displayDrawingPalette: Ref<boolean> = ref(false)
+]) // a megjelenitendo szovegek, _ kicserelve a jatekos nevere
+const typedText: Ref<string> = ref('') // a mar aktualis szovegbol leirt szoveg
+const typingSpeed: number = 20 // irasi sebesseg
+let typingInterval: NodeJS.Timeout | null = null // irasi intervallum
+const textIndex: Ref<number> = ref(0) // az aktualis szoveg indexsze
+const actualFullText: Ref<string> = ref('') // az aktualis teljes szoveg
+const chatBubble: Ref<HTMLElement | null> = ref(null) // HTML element referencia
+const fullText: Ref<boolean> = ref(false) // kiirta - e mar a teljes aktualis szoveget
+const displayActionBar: Ref<boolean> = ref(false) // mutatja - e a navigacios bart
+const displayDrawingPalette: Ref<boolean> = ref(false) // mutatja - e a rajzfeluletet
 const emit = defineEmits<{
 	(e: 'end'): void
-}>()
-typeText()
+}>() // esemenyek
+typeText() // elkezdi irni a szoveget
 
 watch(textIndex, () => {
+	// egy figyelo a textIndexre
 	if (textIndex.value === texts.value.length) {
+		// ha kiirta az osszes szoveget, akkor vegrehajtja az end esemenyt
 		emit('end')
 	}
 	if (textIndex.value === 4) {
+		// 4. indexszu szovegnel kell kirajzolni a navbart
 		displayActionBar.value = true
 	}
 	if (textIndex.value === 5) {
+		// 5. indexszu szovegnel kell megjeleniteni a rajzfeluletet
 		displayDrawingPalette.value = true
 	}
 })
 
 watch(typedText, () => {
+	// figyelo az aktualisan leirt szovegre
 	if (chatBubble.value && shouldScroll()) {
-		scrollToBottom()
+		// ha betelne a szovegdoboz
+		scrollToBottom() // leteker a szovegdoboz aljara
 	}
 })
 
 function scrollToBottom() {
+	// tekeres a szovegdoboz aljara
 	nextTick(() => {
 		if (chatBubble.value) {
 			chatBubble.value.scrollTop = chatBubble.value.scrollHeight
@@ -63,22 +72,24 @@ function scrollToBottom() {
 }
 
 function shouldScroll(): boolean {
-	const bubble = chatBubble.value
-	return bubble ? bubble.scrollHeight > bubble.clientHeight : false
+	// szukseges - e letekerni a szovegdoboz aljara
+	const bubble = chatBubble.value // szovegdoboz referencia
+	return bubble ? bubble.scrollHeight > bubble.clientHeight : false // magassag alapjan meghatarozas
 }
 
 function typeText() {
-	if (textIndex.value === texts.value.length) return
-	actualFullText.value = texts.value[textIndex.value]
-	fullText.value = false
-	typedText.value = ''
-	let index = 0
+	if (textIndex.value === texts.value.length) return // ha vege az aktualis szovegnek
+	actualFullText.value = texts.value[textIndex.value] // aktualis szoveg meghatarozasa
+	fullText.value = false // meg nem irta vegig a szoveget
+	typedText.value = '' // ures szoveg beallitasa
+	let index = 0 // kezdo index
 	typingInterval = setInterval(() => {
 		if (index < actualFullText.value.length) {
-			typedText.value += actualFullText.value.charAt(index)
-			index++
+			// ha meg van szoveg
+			typedText.value += actualFullText.value.charAt(index) // betu hozzaadas
+			index++ // leptetes
 		} else {
-			clearInterval(typingInterval!)
+			clearInterval(typingInterval!) // vege
 			fullText.value = true
 		}
 	}, typingSpeed)
@@ -86,26 +97,27 @@ function typeText() {
 
 function showFullText() {
 	if (typingInterval) {
-		clearInterval(typingInterval)
+		clearInterval(typingInterval) // ha eppen ir, akkor szakitsuk meg
 		typingInterval = null
 	}
-	typedText.value = actualFullText.value
-	fullText.value = true
+	typedText.value = actualFullText.value // teljes szoveg kiirasa
+	fullText.value = true // igazra allitjuk, hogy eppen a teljes szoveg van megjelenitve
 }
 
 function onClick() {
 	if (fullText.value) {
-		textIndex.value++
-		typeText()
+		// ha mar a teljes szoveg van kiirva
+		textIndex.value++ // leptetes
+		typeText() // kiiras
 	} else {
-		showFullText()
+		showFullText() // kulonben a teljes szoveg kiirasa
 	}
 }
 
 defineExpose({
 	displayActionBar,
 	displayDrawingPalette,
-})
+}) // ezeket fogja elerni a szulokomponens is
 </script>
 
 <style scoped>
