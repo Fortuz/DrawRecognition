@@ -62,10 +62,10 @@ function onEnd() {
 @media (min-width: 1025px) {
 	.owl {
 		position: fixed;
-		top: 15vh;
+		top: 52vh;
 		left: 0;
 		width: 45vw;
-		height: 100%;
+		height: 38%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
