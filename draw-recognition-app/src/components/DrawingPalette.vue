@@ -40,9 +40,9 @@ onMounted(() => {
 const predict = () => {
 	if (!ctx || !canvas.value) return // ha valami meg nem toltott volna be
 	let tensor = tf.browser.fromPixels(canvas.value, 1) // atalakitjuk 3d tensorra a rajzot, a harmadik dimenzio a csatornak szama, ami most 1, mert fekete-feher a rajz
-	tensor = tensor.transpose() // a tenzor dimenzióinak sorrendjenek megvaltoztatasa
-	tensor = tf.reverse(tensor, 1) // megforditjuk a tenzor elemeit a megadott tengely mentén
-	tensor = tf.scalar(1).sub(tensor.toFloat().div(255)).expandDims(-1) // eloszor atalakitjuk a tenzort lebegopontos számokká, majd normalizaljuk 0 és 1 koze, vegul hozzáadunk egy uj dimenziot
+	tensor = tensor.transpose() // a tenzor dimenzioinak sorrendjenek megvaltoztatasa
+	tensor = tf.reverse(tensor, 1) // megforditjuk a tenzor elemeit a megadott tengely menten
+	tensor = tf.scalar(1).sub(tensor.toFloat().div(255)).expandDims(-1) // eloszor atalakitjuk a tenzort lebegopontos szamokka, majd normalizaljuk 0 és 1 koze, vegul hozzaadunk egy uj dimenziot
 	tensor = tensor.round() // kerekitjuk, hogy 0 es 1 ertekek legyenek csak
 	const output = model.predict(tensor) as tf.Tensor // becsles elvegzese
 	const predictedIndex = output.argMax(1).dataSync()[0] // az indexszet igy lehet kinyerni a becslesbol
