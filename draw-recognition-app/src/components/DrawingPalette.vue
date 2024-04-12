@@ -30,10 +30,15 @@ let ctx: CanvasRenderingContext2D | null = null // rajzolasi context
 let drawing: Ref<boolean> = ref(false) // igaz ha eppen rajzolas tortenik
 let mode: Ref<boolean> = ref(true) // igaz ha rajzolas, hamis ha radirozas
 const store = useStore() // pinia store
+let model: tf.LayersModel // modell
+
+onMounted(() => {
+	// a komponens betoltesekor fut le
+	model = toRaw(store.getModel!) // atvesszuk a neuronhalo modellt a pinia storebol, a 'toRaw' segitsegevel biztositjuk, hogy a reaktiv proxy mogotti eredeti objektumot kapjuk meg
+})
 
 const predict = () => {
 	if (!ctx || !canvas.value) return // ha valami meg nem toltott volna be
-	const model = toRaw(store.getModel!) // atvesszuk a neuronhalo modellt a pinia storebol, a 'toRaw' segitsegevel biztositjuk, hogy a reaktiv proxy mogotti eredeti objektumot kapjuk meg
 	let tensor = tf.browser.fromPixels(canvas.value, 1) // atalakitjuk 3d tensorra a rajzot, a harmadik dimenzio a csatornak szama, ami most 1, mert fekete-feher a rajz
 	tensor = tensor.transpose() // a tenzor dimenzióinak sorrendjenek megvaltoztatasa
 	tensor = tf.reverse(tensor, 1) // megforditjuk a tenzor elemeit a megadott tengely mentén
