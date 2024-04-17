@@ -100,7 +100,7 @@ describe('CustomDock', () => {
 	it('contains an image in each dock item with the correct src', () => {
 		const images = wrapper.findAll('.dock-link img')
 		expect(images).toHaveLength(3)
-		const expectedSrcs = ['pencil.webp', 'eraser.webp', 'delete.webp']
+		const expectedSrcs = ['pencil.png', 'eraser.png', 'delete.png']
 		images.forEach((imgWrapper: any, index: any) => {
 			expect(imgWrapper.attributes('src')).toBe(expectedSrcs[index])
 		})
