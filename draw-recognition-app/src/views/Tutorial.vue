@@ -19,9 +19,10 @@ import Owl from '../components/Owl.vue'
 import Button from 'primevue/button'
 import NavigationBar from '../components/NavigationBar.vue'
 import DrawingPalette from '../components/DrawingPalette.vue'
-import { type Ref, ref } from 'vue'
+import { provide, type Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from '../store'
+provide('isTutorial', true) // oktatas oldalon vagyunk, ezzel jelezzuk az alsobb komponenseknek
 const store = useStore() // pinia store
 const owl: Ref<InstanceType<typeof Owl> | null> = ref(null) // Owl.vue referencia
 const router = useRouter() // router objektum hasznalata

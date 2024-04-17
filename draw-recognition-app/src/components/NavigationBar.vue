@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import Menubar from 'primevue/menubar'
-import { type Ref, ref, computed, type ComputedRef } from 'vue'
+import { type Ref, ref, computed, type ComputedRef, inject } from 'vue'
 import Dialog from 'primevue/dialog'
 import type { MenuItem } from 'primevue/menuitem'
 import { useRouter } from 'vue-router'
@@ -34,6 +34,7 @@ import { categories } from '../assets/categories'
 import { useStore } from '../store'
 import { getNameByCategory } from '../helpers/getNameById'
 import { storeToRefs } from 'pinia'
+const isTutorial: boolean | undefined = inject('isTutorial') // oktatas oldalon vagyunk - e
 const router = useRouter() // programmatikus router
 const store = useStore() // pinia store
 const isCategoriesDialogOpen: Ref<boolean> = ref(false) // szavak listaja nyitvan van - e
@@ -58,6 +59,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		command: () => {
 			router.push('/') // atnavigalunk a megfelelo oldalra
 		},
+		disabled: isTutorial, // ha oktatas oldalon vagyunk, akkor le legyen tiltva
 	},
 	{
 		label: store.getLanguageDictItem('normalPlay'),
@@ -65,6 +67,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		command: () => {
 			router.push('/normalplay')
 		},
+		disabled: isTutorial,
 	},
 	{
 		label: store.getLanguageDictItem('freePlay'),
@@ -72,6 +75,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		command: () => {
 			router.push('/freeplay')
 		},
+		disabled: isTutorial,
 	},
 	{
 		label: store.getLanguageDictItem('helper'),
@@ -79,6 +83,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		command: () => {
 			router.push('/tutorial')
 		},
+		disabled: isTutorial,
 	},
 	{
 		label: store.getLanguageDictItem('words'),
@@ -86,6 +91,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		command: () => {
 			isCategoriesDialogOpen.value = true // itt megjelenitjuk szavakat tartalmazo dialogot
 		},
+		disabled: isTutorial,
 	},
 	{
 		icon: getActualFlag.value,
@@ -93,6 +99,7 @@ const items: ComputedRef<MenuItem[]> = computed(() => [
 		command: () => {
 			store.changeLanguage() // atvaltjuk a nyelvet
 		},
+		disabled: isTutorial,
 	},
 ])
 
