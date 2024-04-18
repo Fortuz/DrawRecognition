@@ -1,4 +1,4 @@
-### szizsolt2001.web.elte.hu
+### [Játék linkje] (szizsolt2001.web.elte.hu)
 
 # Neuronháló kód
 
