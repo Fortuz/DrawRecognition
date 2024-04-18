@@ -20,7 +20,8 @@
 	<div class="normalPlayGame">
 		<!-- pontok -->
 		<h2>
-			{{ store.getLanguageDictItem('score') }}: {{ score }} / {{ currentIndex }}
+			{{ store.getLanguageDictItem('score') }}: {{ score }} /
+			{{ !end ? currentIndex : selectedNumber }}
 		</h2>
 		<!-- aktualis rajzolando szo -->
 		<h3>
