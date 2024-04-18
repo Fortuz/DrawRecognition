@@ -1,3 +1,5 @@
+### szizsolt2001.web.elte.hu
+
 # Neuronháló kód
 
 ## Globális változók
