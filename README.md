@@ -1,4 +1,4 @@
-### ([szizsolt2001.web.elte.hu](https://szizsolt2001.web.elte.hu/))
+### [szizsolt2001.web.elte.hu](https://szizsolt2001.web.elte.hu/)
 
 # Neuronháló kód
 
