@@ -34,7 +34,7 @@ import { categories } from '../assets/categories'
 import { useStore } from '../store'
 import { getNameByCategory } from '../helpers/getNameById'
 import { storeToRefs } from 'pinia'
-const isTutorial: boolean | undefined = inject('isTutorial') // oktatas oldalon vagyunk - e
+const isTutorial: boolean | undefined = inject('isTutorial', false) // oktatas oldalon vagyunk - e
 const router = useRouter() // programmatikus router
 const store = useStore() // pinia store
 const isCategoriesDialogOpen: Ref<boolean> = ref(false) // szavak listaja nyitvan van - e

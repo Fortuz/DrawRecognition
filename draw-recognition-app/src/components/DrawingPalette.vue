@@ -1,22 +1,24 @@
 <template>
-	<canvas
-		ref="canvas"
-		width="256"
-		height="256"
-		@mousedown="startDrawing"
-		@mouseup="stopDrawing"
-		@mouseleave="stopDrawing"
-		@mousemove="draw"
-		@touchstart="startDrawing"
-		@touchend="stopDrawing"
-		@touchcancel="stopDrawing"
-		@touchmove.prevent="draw"
-		style="border: 1px solid black"
-	></canvas>
-	<!-- ezzel kiveszem ezt a taget ebbol a komponensbol es a body html tagjeben fog megjelenni -->
-	<Teleport to="body">
-		<CustomDock @change="onModeChanged" @clear="onCleared"></CustomDock>
-	</Teleport>
+	<div>
+		<canvas
+			ref="canvas"
+			width="256"
+			height="256"
+			@mousedown="startDrawing"
+			@mouseup="stopDrawing"
+			@mouseleave="stopDrawing"
+			@mousemove="draw"
+			@touchstart="startDrawing"
+			@touchend="stopDrawing"
+			@touchcancel="stopDrawing"
+			@touchmove.prevent="draw"
+			style="border: 1px solid black"
+		></canvas>
+		<!-- ezzel kiveszem ezt a taget ebbol a komponensbol es a body html tagjeben fog megjelenni -->
+		<Teleport to="body">
+			<CustomDock @change="onModeChanged" @clear="onCleared"></CustomDock>
+		</Teleport>
+	</div>
 </template>
 
 <script setup lang="ts">
